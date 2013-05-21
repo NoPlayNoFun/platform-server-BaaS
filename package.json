@@ -1,5 +1,5 @@
 {
-  "name": "pursejs",
+  "name": "purse",
   "description": "A permissions level server-side data store with a RESTful API.",
   "version": "1.0.1",
   "author": "JJ Bateman",
@@ -18,7 +18,7 @@
   "keywords": [
     "store",
 	"database",
-	"data"
+	"data",
     "web",
     "rest",
     "restful",
