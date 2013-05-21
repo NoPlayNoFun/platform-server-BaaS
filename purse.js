@@ -1,24 +1,3 @@
-//add created on/updated on#
-//check session every time#
-//groups functions #
-//users functions#
-//custom methods #
-//lost pw #
-//forward address for mailers #
-//select certain fields #
-
-//sandbox #
-
-//fix handler passthrough  #
-//salting pws #
-//http basic auth #
-
-//session security #
-	//separate for each login session #
-
-//testing
-
-//docs 
 
 var drest = require("drest");
 var mongo = require('mongodb');

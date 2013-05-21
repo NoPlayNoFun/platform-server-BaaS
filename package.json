@@ -29,6 +29,6 @@
 	"session",
 	"authentication"
   ],
-  "repository": "git://github.com/jjbateman/pursejs",
+  "repository": "git://github.com/jjbateman/purse.js",
   "main": "purse"
 }
