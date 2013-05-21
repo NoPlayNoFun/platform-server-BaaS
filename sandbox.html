@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+
+	<head>
+		<meta http-equiv="expires" content="0">
+		<style>
+		
+			html, body {
+				font-family:sans-serif;
+			}
+			
+			div.listitem {
+				width:250px;
+				background:#EEE;
+				border:1px solid #aaa;
+				border-bottom:1px solid #333;
+				font-size:14px;
+				padding:3px;
+				text-align:center;
+				cursor:hand;
+			}
+			
+			span.link {
+				cursor:hand;
+			}
+			
+			td.fielditem {
+				border: 1px solid #BBB;
+				text-align: center;
+				padding-left: 5px;
+				padding-right: 5px;
+				//width:50px;
+			}
+			
+			div.dialog_out {
+				position:absolute;
+				width:100%;
+				height:100%;
+				background:rgba(0,0,0,.25);
+				top:0px;
+				left:0px;
+				position: fixed;
+				bottom: 0;
+				vertical-align:middle;
+				display:none;
+			}
+			
+			div.dialog {
+				width: 40px;
+				height: 10px;
+				background-color: white;
+
+				position: absolute;
+				top:0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				
+				margin: auto;
+			}
+			
+			div#template_modifyRoles td {
+				vertical-align:top;
+			}
+			
+			div#template_modifyRoles hr {
+				border: 0px;
+				border-bottom: 1px solid #BBB;
+			}
+			
+		</style>
+	</head>
+
+
+
+	<script>
+		var Purse = function(url) {
+			this._initialize(url);
+		}
+		
+		Purse.prototype._initialize = function(url) {
+			this.url = url;
+			this._sessionuser = localStorage._sessionuser || null; 
+			if(this._sessionuser) {
+				this._sessionuser = JSON.parse(localStorage._sessionuser);
+			}
+			
+			this.store.purse = this;
+			this.user.purse = this;
+			this.group.purse = this;
+		}
+		
+		Purse.prototype.get = function(path,query,callback) {
+			this._connect("get", path, query, null, callback);
+		}
+		
+		Purse.prototype.post = function(path,query,data,callback) {
+			this._connect("post", path, query, data, callback);
+		}
+		
+		Purse.prototype.put = function(path,query,data,callback) {
+			this._connect("put", path, query, data, callback);
+		}
+		
+		Purse.prototype.query = function(path,query,callback) {
+			this._connect("get", path, query, null, callback);
+		}
+		
+		Purse.prototype.del = function(path,query,callback) {
+			this._connect("delete", path, query, null, callback);
+		}
+		
+		Purse.prototype._connect = function(method, path, query, data, callback) {
+			if(query) {
+				query = "?"+JSON.stringify(query);
+			}else{
+				query = "";
+			}
+			if(data) {
+				data = JSON.stringify(data);
+			}
+			
+			var client = new XMLHttpRequest();
+			client.onreadystatechange = function(h) {
+				console.log(client);
+				if(client.readyState==4) {
+					var response = (client.responseText=="")?"":JSON.parse(client.responseText);
+					if(client.status == 401) {
+					//
+						get("login").style.display = "block";
+						get("main").style.display = "none";
+					}else{
+						callback({status:client.status, response:response});
+					}
+				}
+			};
+			client.open(method, this.url+"/"+path+query);
+			
+			if(this._sessionuser) {
+				client.setRequestHeader("Session-Id", this._sessionuser.session);
+			}
+			client.setRequestHeader("Cache-Control", "private, max-age=0");
+			
+			client.send(data);
+		}
+		
+		Purse.prototype.store = {
+			add:function(name, data, callback) {
+				this.purse.post("store/"+name, null, data, function(response){
+					callback(response);
+				});
+			},
+			
+			retrieve:function(name, id, callback) {
+				this.purse.get("store/"+name+"/"+id, null, function(response){
+					callback(response);
+				});
+			},
+			
+			update:function(name, id, data, callback) {
+				this.purse.put("store/"+name+"/"+id, null, data, function(response){
+					callback(response);
+				});
+			},
+			
+			query:function(name, query, callback) {
+				this.purse.get("store/"+name,query, function(response){
+					callback(response);
+				});
+			},
+			
+			remove:function(name, id, callback) {
+				this.purse.del("store/"+name+"/"+id, null, function(response){
+					callback(response);
+				});
+			},
+			
+			info:function(name, callback) {
+				this.purse.get("store/"+name+"/info", null, function(response){
+					callback(response);
+				});
+			},
+			
+			createObject:function(name, schema, roles, callback) {
+				var data = {name:name, schema:schema, roles:roles};
+				this.purse.post("store", null, data, function(response){
+					callback(response);
+				});
+			},
+			
+			updateObject:function(name, schema, roles, callback) {
+				var data = {name:name, schema:schema, roles:roles};
+				this.purse.put("store", null, data, function(response){
+					callback(response);
+				});
+			},
+			
+			getObjects:function(callback) {
+				this.purse.get("store",null, function(response){
+					callback(response);
+				});
+			}
+		}
+		
+		Purse.prototype.user = {
+			login:function(username, password, callback) {
+				var purse = this.purse;
+				this.purse.get("user/login",{user:username, password:password}, function(response){
+					if(response.status==200) {
+					//	localStorage._sessionuser = JSON.stringify(response.response);
+					//	purse._sessionuser = response.response;
+					}
+				
+					callback(response);
+				});
+			}, 
+			
+			logout:function(callback) {
+				var purse = this.purse;
+				this.purse.get("user/logout",null,function(response){
+				
+					delete localStorage._sessionuser;
+					delete purse._sessionuser;
+					
+					callback(response);
+				});
+			},
+			
+			add:function(data, callback) {
+				this.purse.post("user", null, data, function(response){
+					callback(response);
+				});
+			},
+			
+			retrieve:function(id, callback) {
+				this.purse.get("user/"+id, null, function(response){
+					callback(response);
+				});
+			},
+			
+			update:function(id, data, callback) {
+				this.purse.put("user/"+id, null, data, function(response) {
+					callback(response);
+				});
+			},
+			
+			activate:function(code, callback) {
+				this.purse.get("user/activate/"+code, null, function(response){
+					callback(response);
+				});
+			},
+			
+			query:function(query, callback) {
+				this.purse.get("user",query, function(response){
+					callback(response);
+				});
+			},
+			
+			remove:function(id, callback) {
+				this.purse.del("user/"+id, null, function(response){
+					callback(response);
+				});
+			},
+			
+			forgotPassword:function(email, callback) {
+				
+			},
+			
+			resetPassword:function(code, email, callback) {
+				
+			}
+		}
+		
+		Purse.prototype.group = {
+			add:function(data, callback) {
+				this.purse.post("group", null, data, function(response){
+					callback(response);
+				});
+			},
+			
+			update:function(id, data, callback) {
+				this.purse.put("group/"+id, null, data, function(response){
+					callback(response);
+				});
+			},
+			
+			query:function(query, callback) {
+				this.purse.get("group",query, function(response){
+					callback(response);
+				});
+			},
+			
+			remove:function(id, callback) {
+				this.purse.del("group/"+id, null, function(response){
+					callback(response);
+				});
+			}
+		}
+		
+		
+	</script>
+	
+	
+	<script>
+		
+		var p = new Purse(window.location.protocol+"//"+window.location.host);
+		var get = function(id) {
+			return document.getElementById(id);
+		}
+		
+
+		var currentField = null;
+		var currentFieldCount = 0;
+		var currentFieldSkip = 0;
+		var currentFieldLimit = 10;
+		
+		var loginUser = function(username, password) {
+			p.user.login(username, password, function(r) {
+				console.log(r);
+				if(r.status == 401) {
+					get("login_message").innerHTML = "Bad username or password";
+				}else if(r.status == 403) {
+					get("login_message").innerHTML = "User is not activated";
+				}else if(r.status ==  200) {
+					get("login").style.display = "none";
+					initializeMain();
+				}
+			});
+		}
+		
+		var logoutUser = function() {
+			p.user.logout(function(r) {
+				window.location.reload();
+			});
+		}
+		
+		var initializeMain = function() {
+			get("main").style.display = "block";
+			populateList();
+		}
+		
+		var populateList = function() {
+			p.store.getObjects(function(r) {
+				if(r.status==200) {
+					var list = r.response;
+					get("list_stores").innerHTML = "";
+					for(var i=0;i<list.length;i++) {
+						var div = document.createElement("div");
+						div.setAttribute("onclick",'currentFieldSkip=0;populateFields("'+list[i]+'");');
+						div.setAttribute("class","listitem");
+						div.innerHTML = list[i];
+						get("list_stores").appendChild(div);
+					}
+					
+					if(list.length>0) {
+						populateFields(list[list.length-1]);
+					}
+				}else{
+					get("list_stores").innerHTML = "<span style='color:red'>Unavailable</span>";
+				}
+			});
+		}
+		
+		var populateFields = function(id) {
+			currentField = id;
+			var call = null;
+			
+			
+			if(id=="users_") {
+				call = function(a, b, c) {
+					p.user.query({count:true},function(r) {
+						currentFieldCount = parseInt(r.response);
+						p.user.query(b, c);
+					});
+				}
+			}else if(id=="groups_") {
+				call = function(a, b, c) {
+					p.group.query({count:true},function(r) {
+						currentFieldCount = parseInt(r.response);
+						p.group.query(b, c);
+					});
+				}
+			}else {
+				call = function(a, b, c) {
+					p.store.query(a,{count:true},function(r) {
+						currentFieldCount = parseInt(r.response);
+						p.store.query(a, b, c);
+					});
+				}
+			}
+		
+		
+			p.store.info(id, function(r) {
+				var schematypes = r.response.schema;
+				
+			
+				get("field_modify").style.display="block";
+				get("field_name").innerHTML = id.replace("_","");
+				
+				call(id,{sort:{objectId:1},limit:currentFieldLimit,skip:currentFieldSkip*currentFieldLimit}, function(r) {
+				
+					get("field_total").innerHTML = Math.ceil(currentFieldCount/currentFieldLimit);
+					get("field_page").value = currentFieldSkip+1;
+				
+				
+					if(r.status==200) {
+						var elements = r.response;
+						var schema = {};
+						
+						for(var i=0;i<elements.length;i++) {
+							for(var value in elements[i]) {
+								if(!schema[value]) {
+									schema[value] = [];
+								}
+								schema[value][i]= (elements[i][value]);
+							}
+						}
+						
+						for(var value in schematypes) {
+							if(schema[value]) {
+								schema[value].type = schematypes[value];
+							}else if(value=="_key"){
+								
+							}else{
+								schema[value] = [];
+								schema[value].type = schematypes[value];
+							}
+						}
+						
+						console.log(schema);
+						var table = get("field_stores");
+						
+						while (table.firstChild) {
+							table.removeChild(table.firstChild);
+						}
+						
+						var currentTR = document.createElement("tr");
+						table.appendChild(currentTR);
+						
+						var currentTD = document.createElement("td");
+						currentTD.className = "fielditem";
+						currentTD.style.background = "#E5D5EE";
+							
+						currentTD.innerHTML = "<strong>objectId</strong>";
+						
+						currentTR.appendChild(currentTD);
+						
+						for(var value in schema) {
+							if(value == "objectId") {
+									continue;
+							}
+						
+							var currentTD = document.createElement("td");
+							currentTD.className = "fielditem";
+							currentTD.style.background = "#EEE";
+
+							
+							currentTD.innerHTML = "<strong>"+value+"</strong>";
+							if(schema[value].type){
+								currentTD.innerHTML += "&nbsp;<span class='link' style='font-size:11px' onclick='editColumn(\""+value+"\", \""+schema[value].type+"\")'>["+schema[value].type.substring(0,1)+"]&#9660;</span>";
+							}
+							
+							currentTR.appendChild(currentTD);
+						}
+						
+						for(var i=0;i<elements.length+1;i++) {
+							currentTR = document.createElement("tr");
+							table.appendChild(currentTR);
+							
+							var currentTD = document.createElement("td");
+							currentTD.className = "fielditem";
+							currentTD.style.height="20px";
+							currentTR.appendChild(currentTD);
+							if(schema.objectId) {
+								if(schema.objectId[i]) {
+									currentTD.innerHTML = schema.objectId[i];
+								} 
+							}
+							
+							for(var value in schema) {
+								if(value == "objectId") {
+									continue;
+								}
+								var currentTD = document.createElement("td");
+								currentTD.className = "fielditem";
+								currentTR.appendChild(currentTD);
+								
+								var readonly = (value=="objectId" || value == "createdOn" || value=="updatedOn");
+								
+								var onchange = "onchange='modifyValue(this,\""+id+"\","+((schema.objectId)?schema.objectId[i]:"null")+",\""+value+"\",\""+schema[value].type+"\")'";
+								if(schema[value][i]){
+									
+									try {
+										schema[value][i] = JSON.stringify(schema[value][i]);
+									}catch(ex) {
+									
+									}
+									
+									if(readonly){
+										currentTD.innerHTML = schema[value][i];
+									}else if(schema[value].type=="boolean"){
+										currentTD.innerHTML = "<input type='checkbox'  "+((schema[value][i])?"checked":"")+" "+onchange+" />";
+									}else{
+										console.log(schema[value][i].toString().length);
+										currentTD.innerHTML = "<input style='text-align:center;width:100%' size='"+Math.min(40,schema[value][i].toString().length)+"' value='"+schema[value][i]+"' "+onchange+" />";
+									}
+									
+								}else if(readonly){
+									currentTD.innerHTML = "";
+								}else if(schema[value].type=="boolean") {
+									currentTD.innerHTML = "<input type='checkbox' "+onchange+" />";
+								}else{
+									currentTD.innerHTML = "<input style='width:100%' size='4' "+onchange+" />";
+								}
+							}
+							
+							var currentTD = document.createElement("td");
+							
+							currentTD.className = "fielditem";
+							currentTD.style.height="20px";
+							currentTR.appendChild(currentTD);
+							try {
+								if(schema.objectId[i]) {
+									currentTD.innerHTML = "<input type='button' value='x' onclick='deleteRow(\""+id+"\",\""+schema.objectId[i]+"\")' />";
+								}
+							}catch(ex) {
+								
+							}
+						}
+					}else{
+						get("field_stores").innerHTML = "<span style='color:red'>Unavailable</span>";
+					}
+				});
+			});
+		}
+	
+		var createStore = function(id) {
+			p.store.createObject(id, {}, {}, function(r) {
+				console.log(r.status);
+				if(r.status==409) {
+					get("template_newStore_message").innerHTML = "Store already exists";
+				}else if(r.status==201) {
+					dialog.style.display = "none";
+					populateList();
+				}
+			});
+		}
+		
+		var addColumn = function(name, type) {
+			var d = {};
+			d[name] = type;
+			p.store.updateObject(currentField, d, {}, function(r) {
+				if(r.status==200) {
+					dialog.style.display = "none";
+					populateFields(currentField);
+				}else{
+					get("template_addColumn_message").innerHTML = "Unexpected error";
+				}
+			});
+		}
+		
+		var removeColumn = function(name) {
+			var d = {};
+			d[name] = null;
+			
+			p.store.updateObject(currentField, d, {}, function(r) {
+				console.log(r);
+				if(r.status==200) {
+					dialog.style.display = "none";
+					populateFields(currentField);
+				}else{
+					get("template_addColumn_message").innerHTML = "Unexpected error";
+				}
+			});
+		}
+
+		var addColumnShow = function() {
+			showTemplate('template_addColumn');
+			get("addColumn_name").value = "";
+			get("addColumn_name").disabled = "";
+			get("addColumn_create").value = "create";
+			get("addColumn_remove").style.display="none";
+			
+			get("template_addColumn_message").innerHTML = "";
+		}
+		
+		var editColumn = function(name, type) {
+			showTemplate('template_addColumn');
+			get("template_addColumn_message").innerHTML = "";
+			get("addColumn_name").value = name;
+			get("addColumn_name").disabled = "true";
+			get("addColumn_type").value = type;
+			get("addColumn_create").value = "done";
+			get("addColumn_remove").style.display="block";
+			
+			get("template_addColumn_message").innerHTML = "";
+		}
+		
+		var showTemplate = function(id, values) {
+			var dialog = get("dialog");
+			dialog.style.display = "block";
+			var inner = get(id).cloneNode(true);
+			dialog.innerHTML = "";
+			dialog.appendChild(inner);
+			if(inner.innerHTML.indexOf(">[x]<")==-1) {
+				inner.innerHTML += "<span style='font-size:11px;font-weight:bold' class='link' onclick='get(\"dialog\").style.display=\"none\"'>[x]</style><br><span id='"+id+"_message' style='background:white;border-bottom:1px solid black;color:red'></span>";
+			}
+		}
+		
+		var modifyValue = function(element,name,id,key,type) {
+			
+			var value = element.value;
+			var isObj = false;
+			var allow = false;
+			
+			try {
+				JSON.parse(value);
+				isObj = true;
+			}catch(ex){}
+				
+			if(element.type == "checkbox") {
+				value = element.checked;
+				allow = true;
+			}else if(!isNaN(Number(value))) {
+				if(type == "number") {
+					value = parseInt(value);
+				}else{
+					value = value.toString();
+				}
+				allow = true;
+			}else if(isObj) {
+				value = JSON.parse(value);
+				if(value.length && type=="array") {
+					allow = true;
+				}else if(type == "object") {
+					allow = true;
+				}
+			}else if(typeof value == type) {
+				allow = true;
+			}
+			if(!allow) {
+				element.style.color = "red";
+			}
+			
+			
+			var d = {};
+			d[key] = value;
+			
+			
+			var callAdd;
+			var callUpdate;
+
+			
+			if(name=="users_") {
+				callAdd = function(a, b, c) {
+					p.store.add("users_", b, c);
+				}
+				callUpdate = function(a, b, c, d) {
+					p.user.update(b, c, d);
+				}
+			}else if(name=="groups_") {
+				callAdd = function(a, b, c) {
+					p.group.add(b, c);
+				}
+				callUpdate = function(a, b, c, d) {
+					p.group.update(b, c, d);
+				}
+			}else {
+				callAdd = function(a, b, c) {
+					p.store.add(a, b, c);
+				}
+				callUpdate = function(a, b, c, d) {
+					p.store.update(a, b, c, d);
+				}
+			}
+			
+			if(id==null) {
+				callAdd(name,d,function(r) {
+					if(r.status==201) {
+						if(currentFieldCount-(currentFieldLimit*currentFieldSkip)>=currentFieldLimit) {
+							currentFieldSkip = Math.floor(currentFieldCount/currentFieldLimit);
+						}
+						populateFields(currentField);
+					}
+				});
+			}else{
+				callUpdate(name,id,d,function(r) {
+					if(r.status==200) {
+						populateFields(currentField);
+					}
+				});
+			}
+		}
+		
+		var currentRoles = null;
+		var modifyRolesShow = function() {
+			showTemplate('template_modifyRoles');
+			
+			p.store.info(currentField, function(r) {
+				var roles = r.response.roles;
+				
+				var types = ["get","post","query","put","delete"];
+				for(var i=0;i<types.length;i++) {
+					get("modifyRoles_"+types[i]+"_user").value = "";
+					get("modifyRoles_"+types[i]+"_group").value = "";
+				}
+				
+				for(var value in roles) {
+					if(roles[value].user) {
+						get("modifyRoles_"+value+"_user").value = JSON.stringify(roles[value].user).replace(/]|\[/g,"");
+					}
+					
+					if(roles[value].group) {
+						get("modifyRoles_"+value+"_group").value = JSON.stringify(roles[value].group).replace(/]|\[/g,"");
+					}
+				}
+				currentRoles = roles;
+			});
+		}
+		
+		var modifyRoles = function() {
+			var roleObj = {};
+			var types = ["get","post","query","put","delete"];
+			
+			for(var i=0;i<types.length;i++) {
+				var user = get("modifyRoles_"+types[i]+"_user").value;
+				var group = get("modifyRoles_"+types[i]+"_group").value;
+				
+				if(user.length>0) {
+					if(!roleObj[types[i]]) {
+						roleObj[types[i]] = {};
+					}
+					roleObj[types[i]].user = JSON.parse("["+user+"]");
+				}
+				
+				if(group.length>0) {
+					if(!roleObj[types[i]]) {
+						roleObj[types[i]] = {};
+					}
+					roleObj[types[i]].group = JSON.parse("["+group+"]");
+				}
+				
+				if(currentRoles[types[i]]) {
+					if(!roleObj[types[i]]) {
+						roleObj[types[i]] = {};
+					}
+					
+					if(currentRoles[types[i]].user) {
+						if(!roleObj[types[i]]) {
+							roleObj[types[i]] = {};
+						}
+						for(var j=0;j<currentRoles[types[i]].user.length;j++) {
+							if(!roleObj[types[i]].user) {
+								roleObj[types[i]].user = [];
+							}
+							if(roleObj[types[i]].user.indexOf(currentRoles[types[i]].user[j])==-1) {
+								console.log("u "+typeof currentRoles[types[i]].user[j]);
+								if(typeof currentRoles[types[i]].user[j] == "string"){
+									currentRoles[types[i]].user[j] = "-"+currentRoles[types[i]].user[j];
+								}else if(typeof currentRoles[types[i]].user[j] == "number") {
+									currentRoles[types[i]].user[j] = -currentRoles[types[i]].user[j];
+								}
+								roleObj[types[i]].user.push(currentRoles[types[i]].user[j]);
+							}
+						}
+					}
+					
+					if(currentRoles[types[i]].group) {
+						for(var j=0;j<currentRoles[types[i]].group.length;j++) {
+							if(!roleObj[types[i]].group) {
+								roleObj[types[i]].group = [];
+							}
+							if(roleObj[types[i]].group.indexOf(currentRoles[types[i]].group[j])==-1) {
+								if(typeof currentRoles[types[i]].group[j] == "string"){
+									currentRoles[types[i]].group[j] = "-"+currentRoles[types[i]].group[j];
+								}else if(typeof currentRoles[types[i]].group[j] == "number") {
+									currentRoles[types[i]].group[j] = -currentRoles[types[i]].group[j];
+								}
+								roleObj[types[i]].group.push(currentRoles[types[i]].group[j]);
+							}
+						}
+					}
+				}
+				 
+			}
+			
+			p.store.updateObject(currentField, null, roleObj, function(r) {
+				if(r.status==200) {
+					dialog.style.display = "none";
+					populateFields(currentField);
+				}else{
+					get("template_addColumn_message").innerHTML = "Unexpected error";
+				}
+			});
+			
+			
+		}
+		
+		var deleteRow = function(store, id) {
+			console.log(store+" "+id);
+			
+			var call = null;
+			
+			if(store=="users_") {
+				call = function(a, b, c) {
+					p.user.remove(b, c);
+				}
+			}else if(store=="groups_") {
+				call = function(a, b, c) {
+					p.group.remove(b, c);
+				}
+			}else {
+				call = function(a, b, c) {
+					p.store.remove(a, b, c);
+				}
+			}
+			
+			call(store, id, function(r) {
+				if(r.status==200) {
+					populateFields(currentField);
+				}
+			});
+		}
+		
+		var page = function(type) {
+
+			switch(type) {
+				case "next":
+					if(((currentFieldSkip+1)*currentFieldLimit)>currentFieldCount) {
+						return;
+					}
+					currentFieldSkip++;
+					break;
+				case "begin":
+					currentFieldSkip=0;
+					break;
+				case "previous":
+					if( currentFieldSkip-1<0) {
+						return;
+					}
+					currentFieldSkip--;
+					break;
+				case "end":
+					currentFieldSkip=Math.floor(currentFieldCount/currentFieldLimit);
+					break;
+				case "update":
+					var page = parseInt(get("field_page").value);
+					
+					if(page<=0 || page+1*currentFieldLimit>currentFieldCount) {
+						return;
+					}
+					console.log(page);
+					currentFieldSkip=page-1;
+					break;
+			}
+			
+			populateFields(currentField);
+		}
+		
+	</script>
+	
+	<body>
+		<div style="text-align:right;width:250px;border:1px solid #eee" id="login">
+				Username <input id="login_username"/> <br>
+				Password <input type = "password" id="login_password"/> <br>
+				<span id="login_message" style="color:red;font-size:11px"></span> <input type = "submit" onclick="loginUser(get('login_username').value,get('login_password').value)">
+		</div>
+		
+		<div style="text-align:right;width:99%;border:1px solid #eee;display:none" id="main">
+			<span style="font-size:12px">
+				<span onclick="logoutUser()"><strong>logout</strong></span> &nbsp;
+			</span>
+			
+			<table style="table-layout:fixed;overflow:hidden; white-space: nowrap;width:100%;">
+				<tr>
+					<td style="vertical-align:top;width:260px;background:#FEFEFE">
+					 	<div class="listitem" onclick="populateFields('users_')">Users</div> 
+						<div class="listitem" onclick="populateFields('groups_')">Groups</div>
+						<br>
+						<div style="font-size:12px">Stores  <strong><span class="link" onclick="showTemplate('template_newStore')">[+new]</span></strong></div>
+						<div id="list_stores">
+						</div>
+					</td>
+					<td style="vertical-align:top;padding-left:10px;overflow-x:auto;height:100%;">
+							<div style="text-align:left;display:none;" id="field_modify">
+								<span id="field_name" style="font-weight:bold"></span>
+								<input type="button" value="Add column" onclick="addColumnShow()" />
+								&nbsp; | <input type="button" value="Modify roles"  onclick="modifyRolesShow()" />
+							</div>
+							<table id="field_stores" style="font-size:12px;">
+								
+							</table>
+							<div>
+								<span style="border:1px solid #aaa;padding:5px;font-size:12px">
+									<input type="button" value="<<" onclick="page('begin')"/>
+									<input type="button" value="<" onclick="page('previous')" />
+									<input id="field_page" style="width:24px;text-align:center" onchange="page('update')" /> of <span id="field_total" style="font-weight:bold"></span>
+									<input type="button" value=">" onclick="page('next')" />
+									<input type="button" value=">>" onclick="page('end')" />
+								</span>
+							<div>
+					</td>
+					
+				</tr>
+				
+			</table>
+			
+		</div>
+		
+		<div class="dialog_out" id="dialog" >
+			
+		</div>
+		
+		<div style="display:none" id="templates">
+			
+			<div id="template_newStore" class="dialog" style="width:330px;height:35px;text-align:center;padding-top:6px;border:1px solid #555">
+				<span>Store name: </span> <input id="newStore_name" /> <input type="button" value="create" onclick="createStore(get('newStore_name').value)" />
+			</div>
+			
+			<div id="template_addColumn" class="dialog" style="width:270px;height:110px;text-align:center;padding-top:6px;border:1px solid #555">
+				<table>
+					<tr>
+						<td>
+							<span>Column name: </span>
+						</td>
+						<td>
+							<input id="addColumn_name" /><br>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span>Type: </span> 
+						</td>
+						<td>
+							<select style="width:100%" id="addColumn_type">
+							  <option value="string">String</option>
+							  <option value="boolean">Boolean</option>
+							  <option value="number">Number</option>
+							  <option value="array">Array</option>
+							  <option value="object">Object</option>
+							</select>
+							
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="button" value="Remove" onclick="removeColumn(get('addColumn_name').value)" id="addColumn_remove" style="display:none"/>
+						</td>
+						<td  style="text-align:right">
+								<input type="button" value="create" onclick="addColumn(get('addColumn_name').value, get('addColumn_type').value)" id="addColumn_create" />
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div id="template_modifyRoles" class="dialog" style="width:370px;height:520px;text-align:center;padding-top:6px;border:1px solid #555">
+				<table style="width:100%;vertical-align:top">
+					<tr>
+						<td>
+							<strong>get<strong>
+						</td>
+						<td style="font-size:11px">
+							user ids <input style="width:100%" id="modifyRoles_get_user" /><br>
+							group ids <input style="width:100%" id="modifyRoles_get_group" /><br><hr>
+						</td>
+					</tr>
+				
+					<tr>
+						<td>
+							<strong>post</strong>
+						</td>
+						<td style="font-size:11px">
+							user ids <input style="width:100%" id="modifyRoles_post_user" /><br>
+							group ids <input style="width:100%" id="modifyRoles_post_group" /><br><hr>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>
+							<strong>put</strong>
+						</td>
+						<td style="font-size:11px">
+							user ids <input style="width:100%" id="modifyRoles_put_user" /><br>
+							group ids <input style="width:100%" id="modifyRoles_put_group" /><br><hr>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>
+							<strong>query</strong>
+						</td>
+						<td style="font-size:11px">
+							user ids <input style="width:100%" id="modifyRoles_query_user" /><br>
+							group ids <input style="width:100%" id="modifyRoles_query_group" /><br><hr>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>
+							<strong>delete</strong>
+						</td>
+						<td style="font-size:11px">
+							user ids <input style="width:100%" id="modifyRoles_delete_user" /><br>
+							group ids <input style="width:100%" id="modifyRoles_delete_group" /><br>
+						</td>
+					</tr>
+					</tr>
+						<td colspan="2" style="text-align:right">
+							<input type="button" value="Update" onclick="modifyRoles()" id="modifyRoles_update" />
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			
+		</div>
+		
+	</body>
+	
+	<script>
+		var initialize = (function() {
+			if(p._sessionuser) {
+				get("login").style.display = "none";
+				initializeMain();
+			}
+		})();
+		
+		get("login").style.display = "none";
+		initializeMain();
+	</script>
+
+</html>

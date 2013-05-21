@@ -1,0 +1,34 @@
+{
+  "name": "pursejs",
+  "description": "A permissions level server-side data store with a RESTful API.",
+  "version": "1.0.1",
+  "author": "JJ Bateman",
+  "contributors": [
+    {
+      "name": "JJ Bateman",
+      "email": "jjbtmn+github@gmail.com"
+    }
+  ],
+  "dependencies": {
+    "drest": "1.1.6",
+    "mongodb": "1.3.6",
+    "nodemailer": "0.4.3"
+  },
+
+  "keywords": [
+    "store",
+	"database",
+	"data"
+    "web",
+    "rest",
+    "restful",
+    "router",
+    "api",
+	"login",
+	"permissions",
+	"session",
+	"authentication"
+  ],
+  "repository": "git://github.com/jjbateman/pursejs",
+  "main": "purse"
+}
