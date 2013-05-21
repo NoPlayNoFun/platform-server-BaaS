@@ -13,7 +13,7 @@ Store is a permissions level server-side data store with a RESTful API.
   
 ```javascript
 
-        var purse = require("pursejs");
+        var purse = require("purse");
         var store = Purse.createStore("window",8080,"127.0.0.1");
 ```
 
