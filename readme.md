@@ -7,7 +7,7 @@ Store is a permissions level server-side data store with a RESTful API.
    
    * Install `purse.js`
     
-        npm install pursejs
+        npm install purse
 
    * Create a `main.js` file. This is the file you will use to configure purse.js
   
