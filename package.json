@@ -1,7 +1,7 @@
 {
-  "name": "purse",
-  "description": "A permissions level server-side data store with a RESTful API.",
-  "version": "1.0.1",
+  "name": "baas",
+  "description": "Node Back-end as a service. A permissions level server-side data store with a RESTful API.",
+  "version": "1.0.3",
   "author": "JJ Bateman",
   "contributors": [
     {
@@ -16,6 +16,8 @@
   },
 
   "keywords": [
+	"backend",
+	"baas",
     "store",
 	"database",
 	"data",
@@ -29,6 +31,6 @@
 	"session",
 	"authentication"
   ],
-  "repository": "git://github.com/jjbateman/purse.js",
-  "main": "purse"
+  "repository": "git://github.com/jjbateman/baas.js",
+  "main": "baas"
 }

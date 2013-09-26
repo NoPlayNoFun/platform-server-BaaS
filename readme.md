@@ -1,20 +1,20 @@
-# Purse.js
+# Node BaaS
 Store is a permissions level server-side data store with a RESTful API. 
 
 ## Setup 
 
    * Install and start mongoDB ([More info](http://docs.mongodb.org/manual/installation/))
    
-   * Install `purse.js`
+   * Install `BaaS`
     
-        npm install purse
+        npm install baas
 
-   * Create a `main.js` file. This is the file you will use to configure purse.js
+   * Create a `main.js` file. This is the file you will use to configure baas
   
 ```javascript
 
-        var purse = require("purse");
-        var store = purse.createStore("window",8080,"127.0.0.1");
+        var baas = require("baas");
+        var store = baas.createStore("window",8080,"127.0.0.1");
 ```
 
   * run `node main.js`
@@ -33,11 +33,11 @@ Boolean. Default `true`. If true, will send an email to recipient upon user crea
 
 Flag indicating whether to allow for email and/or username as a value for the user login. 
 
-`Purse.ALLOW_USERNAME_EMAIL` (Default)
+`baas.ALLOW_USERNAME_EMAIL` (Default)
 
-`Purse.ALLOW_USERNAME`
+`baas.ALLOW_USERNAME`
 
-`Purse.ALLOW_EMAIL`
+`baas.ALLOW_EMAIL`
 
 ### store.setMongoDB(host, port)
 

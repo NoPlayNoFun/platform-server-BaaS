@@ -16,7 +16,7 @@ var dport = process.env['MONGO_NODE_DRIVER_PORT'] != null ? process.env['MONGO_N
 drest.Router.prototype._addRoute = drest.Router.prototype.addRoute;
 drest.Router.prototype.addRoute = function(obj, callback ) {
 	var r = this._addRoute(obj);
-	r.purse = obj.purse;
+	r.baas = obj.baas;
 	return r;
 }
 
@@ -58,23 +58,23 @@ Db.connect.Cursor.prototype.toArray = function(callback) {
 //console.log();
 
 var createStore = function(name, port, ip) {
-	return new Purse(name, port, ip);
+	return new Baas(name, port, ip);
 }
 
-var Purse = function(name, port, ip) {
+var Baas = function(name, port, ip) {
 	this._initialize(name, port, ip);
 }
 
-Purse.ALLOW_USERNAME_EMAIL = 0;
-Purse.ALLOW_USERNAME = 1;
-Purse.ALLOW_EMAIL = 2;
+Baas.ALLOW_USERNAME_EMAIL = 0;
+Baas.ALLOW_USERNAME = 1;
+Baas.ALLOW_EMAIL = 2;
 
-Purse.prototype._initialize = function(name, port, ip) {
+Baas.prototype._initialize = function(name, port, ip) {
 	this.router = drest.createRouter(port, ip);
 	this.name = name;
 	this.externalUrl = "http://"+ip+":"+port;
 	this.allowUserActivation = true;
-	this.loginAllowedType = Purse.ALLOW_USERNAME_EMAIL;
+	this.loginAllowedType = Baas.ALLOW_USERNAME_EMAIL;
 	
 	this._dhost = dhost;
 	this._dport = dport;
@@ -89,14 +89,14 @@ Purse.prototype._initialize = function(name, port, ip) {
 	this.setTemplateActivate(
 		null,
 		"Activate Account",
-		"<p>Welcome #{handler.data.username}! Activate your account here: <a href='#{handler.route.purse.externalUrl}/user/activate?#{handler.data.activateCode}'>#{handler.route.purse.externalUrl}/user/activate?#{handler.data.activateCode}</a></p>",
-		"Welcome #{handler.data.username}! Activate your account here: #{handler.route.purse.externalUrl}/user/activate?#{handler.data.activateCode}",
+		"<p>Welcome #{handler.data.username}! Activate your account here: <a href='#{handler.route.baas.externalUrl}/user/activate?#{handler.data.activateCode}'>#{handler.route.baas.externalUrl}/user/activate?#{handler.data.activateCode}</a></p>",
+		"Welcome #{handler.data.username}! Activate your account here: #{handler.route.baas.externalUrl}/user/activate?#{handler.data.activateCode}",
 		this.externalUrl+"/message?User activated",
 		this.externalUrl+"/message?Not found"
 	);
 	
 	this.router.setAuthLayer(function(passthrough) {
-		passthrough.route.purse.auth.getUser(passthrough);
+		passthrough.route.baas.auth.getUser(passthrough);
 	});
 	
 	this.router.addRoute({
@@ -106,7 +106,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:201,
 		action:this.api.store.create,
 		authAction:this.auth.checkRoles,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -116,7 +116,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:200,
 		action:this.api.store.retrieve,
 		authAction:this.auth.checkRoles,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -126,7 +126,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:200,
 		action:this.api.store.info,
 		authAction:this.auth.isAdmin,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -136,7 +136,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:200,
 		action:this.api.store.update,
 		authAction:this.auth.checkRoles,
-		purse:this
+		baas:this
 	});
 
 	this.router.addRoute({
@@ -146,7 +146,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:200,
 		action:this.api.store.query,
 		authAction:this.auth.checkRoles,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -156,7 +156,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:200,
 		action:this.api.store.del,
 		authAction:this.auth.checkRoles,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -166,7 +166,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:201,
 		action:this.api.store.createObject,
 		authAction:this.auth.isAdmin,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -176,7 +176,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:200,
 		action:this.api.store.updateObject,
 		authAction:this.auth.isAdmin,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -186,7 +186,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:200,
 		action:this.api.store.getObjects,
 		authAction:this.auth.isAdmin,
-		purse:this
+		baas:this
 	});
 	
 	/*this.router.addRoute({
@@ -196,7 +196,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:200,
 		action:this.api.store.deleteObject,
 		authAction:this.auth.isAdmin,
-		purse:this
+		baas:this
 	});*/
 	
 	
@@ -206,7 +206,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		authLevel:0,
 		status:200,
 		action:this.api.users.login,
-		purse:this
+		baas:this
 	});
 	
 		
@@ -216,7 +216,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		authLevel:1,
 		status:200,
 		action:this.api.users.logout,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -225,7 +225,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		authLevel:0,
 		status:201,
 		action:this.api.users.create,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -234,7 +234,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		authLevel:1,
 		status:200,
 		action:this.api.users.retrieve,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -244,7 +244,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:200,
 		action:this.api.users.query,
 		authAction:this.auth.isAdmin,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -253,7 +253,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		authLevel:1,
 		status:200,
 		action:this.api.users.update,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -262,7 +262,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		authLevel:0,
 		status:200,
 		action:this.api.users.activateUser,
-		purse:this
+		baas:this
 	});	
 	
 	this.router.addRoute({
@@ -271,7 +271,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		authLevel:0,
 		status:200,
 		action:this.api.users.forgotPassword,
-		purse:this
+		baas:this
 	});	
 	
 	this.router.addRoute({
@@ -281,7 +281,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:200,
 		action:this.api.users.del,
 		authAction:this.auth.checkRoles,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -291,7 +291,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:201,
 		action:this.api.groups.create,
 		authAction:this.auth.isAdmin,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -301,7 +301,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:200,
 		action:this.api.groups.query,
 		authAction:this.auth.isAdmin,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -311,7 +311,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:200,
 		action:this.api.groups.update,
 		authAction:this.auth.isAdmin,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -321,7 +321,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		status:200,
 		action:this.api.groups.del,
 		authAction:this.auth.isAdmin,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -330,7 +330,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		authLevel:0,
 		status:200,
 		action:this.api.setup.setup,
-		purse:this
+		baas:this
 	});
 	
 	this.router.addRoute({
@@ -339,7 +339,7 @@ Purse.prototype._initialize = function(name, port, ip) {
 		authLevel:0,
 		status:200,
 		action:this.api.sandbox,
-		purse:this
+		baas:this
 	});
 	
 		this.router.addRoute({
@@ -350,16 +350,16 @@ Purse.prototype._initialize = function(name, port, ip) {
 		action:function(handler) {
 			handler.respond(decodeURIComponent(handler.queryString));
 		},
-		purse:this
+		baas:this
 	});
 }
 
 
-Purse.prototype.connect = function(cname, callback,  write) {
+Baas.prototype.connect = function(cname, callback,  write) {
 	if(!write)write = 0;
-	var purse = this;
-	Db.connect(format("mongodb://%s:%s/"+purse.name+"?w=%s", purse._dhost, purse._dport, write), function(err, db){
-		db.collection(purse.name+cname, function(err, collection) {
+	var baas = this;
+	Db.connect(format("mongodb://%s:%s/"+baas.name+"?w=%s", baas._dhost, baas._dport, write), function(err, db){
+		db.collection(baas.name+cname, function(err, collection) {
 			if(collection) {
 				callback(db, collection);
 			}
@@ -367,19 +367,19 @@ Purse.prototype.connect = function(cname, callback,  write) {
 	});
 }
 
-Purse.prototype.dbError = function(handler, db) {
+Baas.prototype.dbError = function(handler, db) {
 	db.close();
 	handler.response.writeHead(500, []);
 	handler.response.end("");
 	return false;
 }
 
-Purse.prototype.setMongoDB = function(host, port) {
+Baas.prototype.setMongoDB = function(host, port) {
 	this._dhost = host;
 	this._dport = port;
 }
 
-Purse.prototype.configureSMTP = function(username, password) {
+Baas.prototype.configureSMTP = function(username, password) {
 	this._smtpTransport = nodemailer.createTransport("SMTP",{
 		auth: {
 			user:username,
@@ -388,15 +388,15 @@ Purse.prototype.configureSMTP = function(username, password) {
 	});
 }
 
-Purse.prototype.setTemplateForgotPassword = function(from, subject, htmlBody, textBody) {
+Baas.prototype.setTemplateForgotPassword = function(from, subject, htmlBody, textBody) {
 	this._templateForgotPassword = {from:from, subject:subject, htmlBody:htmlBody, textBody:textBody};
 }
 
-Purse.prototype.setTemplateActivate = function(from, subject, htmlBody, textBody, complete, notFound) {
+Baas.prototype.setTemplateActivate = function(from, subject, htmlBody, textBody, complete, notFound) {
 	this._templateActivate = {from:from, subject:subject, htmlBody:htmlBody, textBody:textBody, complete:complete, notFound:notFound};
 }
 
-Purse.generateString = function(min, max, args) {
+Baas.generateString = function(min, max, args) {
 	var alpha = "abcdefghijklmnopqrstuvwxyz";
 	var upperAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
 	var num = "01234567890";
@@ -428,7 +428,7 @@ Purse.generateString = function(min, max, args) {
 	return str;
 }
 
-Purse.parseCookies = function(handler) {
+Baas.parseCookies = function(handler) {
 	var cookies = {};
 	handler.request.headers.cookie && handler.request.headers.cookie.split(';').forEach(function( cookie ) {
 		var parts = cookie.split('=');
@@ -438,7 +438,7 @@ Purse.parseCookies = function(handler) {
 	return cookies;
 }
 
-Purse.replaceMarkers = function(str, objs) {
+Baas.replaceMarkers = function(str, objs) {
 	var stubs = str.match(/#{(.*?)}/g);
 	for(var i=0;i<stubs.length;i++) {
 		var val = stubs[i];
@@ -460,10 +460,10 @@ Purse.replaceMarkers = function(str, objs) {
 	}
 }
 
-Purse.prototype._sendMessage = function(to, template, templateObjs) {
+Baas.prototype._sendMessage = function(to, template, templateObjs) {
 
-	var htmlBody = Purse.replaceMarkers(template.htmlBody, templateObjs);
-	var textBody = Purse.replaceMarkers(template.textBody, templateObjs);
+	var htmlBody = Baas.replaceMarkers(template.htmlBody, templateObjs);
+	var textBody = Baas.replaceMarkers(template.textBody, templateObjs);
 	
 	var options = {};
 	options.to = to;
@@ -477,7 +477,7 @@ Purse.prototype._sendMessage = function(to, template, templateObjs) {
 	});
 }
 
-Purse.prototype.api = {
+Baas.prototype.api = {
 	defaultSchemaValues:["objectId","createdOn","updatedOn"],
 	reservedStoreNames:["users_","groups_","list"],
 	isReserved:function(name) {
@@ -510,11 +510,11 @@ Purse.prototype.api = {
 				return;
 			}
 			
-			var purse = handler.route.purse;
-			purse.connect(".store."+data.name, function(db, collection) {
+			var baas = handler.route.baas;
+			baas.connect(".store."+data.name, function(db, collection) {
 			
 				collection.find({},{_schema:1,_id:0}).limit(1).toArray(function(err, docs) {
-					if(err)return purse.dbError(handler, db);
+					if(err)return baas.dbError(handler, db);
 					if(docs[0]!=undefined) {
 						handler.respondWithDefault("Conflict", callback);
 						db.close();
@@ -523,7 +523,7 @@ Purse.prototype.api = {
 						collection.insert({_schema:data.schema}, {w:0});
 						collection.insert({_roles:data.roles}, {w:0});
 						
-						purse.connect(".store.list_", function(db1, collection1) {
+						baas.connect(".store.list_", function(db1, collection1) {
 							collection1.insert({name:data.name}, {w:0});
 						
 							db1.close();
@@ -550,15 +550,15 @@ Purse.prototype.api = {
 				return;
 			}
 			
-			handler.route.purse.connect(".store."+data.name, function(db, collection) {
+			handler.route.baas.connect(".store."+data.name, function(db, collection) {
 				collection.find({_schema : {$ne:null}},{_schema:1,_id:0}).limit(1).toArray(function(err, docs0){
-					if(err)return handler.route.purse.dbError(handler, db);
+					if(err)return handler.route.baas.dbError(handler, db);
 					
 					collection.find({objectId : {$ne:null}},{_id:0}).limit(1).toArray(function(err, docs1){
-						if(err)return handler.route.purse.dbError(handler, db);
+						if(err)return handler.route.baas.dbError(handler, db);
 						
 						collection.find({_roles : {$ne:null}},{_id:0}).limit(1).toArray(function(err, docs2){
-							if(err)return handler.route.purse.dbError(handler, db);
+							if(err)return handler.route.baas.dbError(handler, db);
 							
 							if(docs0.length == 0) {
 								handler.respondWithDefault("Bad Request", callback);
@@ -629,9 +629,9 @@ Purse.prototype.api = {
 		},
 		
 		getObjects:function(handler, callback) {
-			handler.route.purse.connect(".store.list_", function(db, collection) {
+			handler.route.baas.connect(".store.list_", function(db, collection) {
 				collection.find({name : {$ne:null} },{_id:0}).limit(0).toArray(function(err, docs){
-					if(err)return handler.route.purse.dbError(handler, db);
+					if(err)return handler.route.baas.dbError(handler, db);
 					var list = [];
 					for(var i=0;i<docs.length;i++){
 						if(docs[i].name!="users_" && docs[i].name!="groups_") {
@@ -654,7 +654,7 @@ Purse.prototype.api = {
 				return;
 			}		
 		
-			if( handler.route.purse.api.isReserved(handler.path[1]) && !callback ) {
+			if( handler.route.baas.api.isReserved(handler.path[1]) && !callback ) {
 				var forbidden = true;
 				if(handler.user) {
 					if(handler.user.admin) {
@@ -668,9 +668,9 @@ Purse.prototype.api = {
 				}
 			}
 			
-			handler.route.purse.connect(".store."+handler.path[1], function(db, collection) {
+			handler.route.baas.connect(".store."+handler.path[1], function(db, collection) {
 				collection.find({_schema : {$ne:null} },{_schema:1,_id:0}).limit(1).toArray(function(err, docs){
-					if(err)return handler.route.purse.dbError(handler, db);
+					if(err)return handler.route.baas.dbError(handler, db);
 					if(docs.length==0){
 						handler.respondWithDefault("Not Found", callback);
 					}else{
@@ -718,7 +718,7 @@ Purse.prototype.api = {
 		},
 		
 		retrieve:function(handler, callback) {
-			if( handler.route.purse.api.isReserved(handler.path[1]) && !callback ) {
+			if( handler.route.baas.api.isReserved(handler.path[1]) && !callback ) {
 				var forbidden = true;
 				if(handler.user) {
 					if(handler.user.admin) {
@@ -732,12 +732,12 @@ Purse.prototype.api = {
 				}
 			}
 		
-			handler.route.purse.connect(".store."+handler.path[1], function(db, collection) {
+			handler.route.baas.connect(".store."+handler.path[1], function(db, collection) {
 				collection.find({_schema : {$ne:null} },{_schema:1,_id:0}).limit(1).toArray(function(err, doc) {
-					if(err)return handler.route.purse.dbError(handler, db);
+					if(err)return handler.route.baas.dbError(handler, db);
 					
 					collection.find({objectId:parseInt(handler.path[2])}, {_id:0}).limit(1).toArray(function(err, docs) {
-						if(err)return handler.route.purse.dbError(handler, db);
+						if(err)return handler.route.baas.dbError(handler, db);
 						
 						if(docs.length==0) {
 							handler.status = 404;
@@ -745,8 +745,8 @@ Purse.prototype.api = {
 							handler.respond({}, callback);
 							
 						}else{
-							for(var i=0;i<handler.route.purse.api.defaultSchemaValues.length;i++) {
-								doc[0]._schema[handler.route.purse.api.defaultSchemaValues[i]] = "";
+							for(var i=0;i<handler.route.baas.api.defaultSchemaValues.length;i++) {
+								doc[0]._schema[handler.route.baas.api.defaultSchemaValues[i]] = "";
 							}
 							for(var value in docs[0]) {
 								if(doc[0]._schema[value]==undefined) {
@@ -777,7 +777,7 @@ Purse.prototype.api = {
 				return;
 			}
 			
-			if( handler.route.purse.api.isReserved(handler.path[1]) && !callback ) {
+			if( handler.route.baas.api.isReserved(handler.path[1]) && !callback ) {
 				var forbidden = true;
 				if(handler.user) {
 					if(handler.user.admin) {
@@ -791,9 +791,9 @@ Purse.prototype.api = {
 				}
 			}
 			
-			handler.route.purse.connect(".store."+handler.path[1], function(db, collection) {
+			handler.route.baas.connect(".store."+handler.path[1], function(db, collection) {
 				collection.find({$or:[{_schema:{$ne:null}}, {objectId:parseInt(handler.path[2])}] },{_id:0}).sort({_schema:-1}).limit(2).toArray(function(err, docs){
-					if(err)return handler.route.purse.dbError(handler, db);
+					if(err)return handler.route.baas.dbError(handler, db);
 					
 					if(docs.length<2){
 						handler.respondWithDefault("Not Found", callback);
@@ -837,7 +837,7 @@ Purse.prototype.api = {
 		},
 		
 		query:function(handler, callback) {
-			if( handler.route.purse.api.isReserved(handler.path[1]) && !callback ) {
+			if( handler.route.baas.api.isReserved(handler.path[1]) && !callback ) {
 				var forbidden = true;
 				if(handler.user) {
 					if(handler.user.admin) {
@@ -876,10 +876,10 @@ Purse.prototype.api = {
 				return;
 			}
 			
-			handler.route.purse.connect(".store."+handler.path[1], function(db, collection) {
+			handler.route.baas.connect(".store."+handler.path[1], function(db, collection) {
 				if(count) {
 					collection.find({$and:[{objectId:{$ne:null}},where]}, {objectId:1,_id:0}).count(function(err, c){
-						if(err)return handler.route.purse.dbError(handler, db);
+						if(err)return handler.route.baas.dbError(handler, db);
 						
 						handler.respond(c.toString(), callback);
 						db.close();
@@ -889,16 +889,16 @@ Purse.prototype.api = {
 						//return;
 					collection.find({_schema : {$ne:null} },{_schema:1,_id:0}).limit(1).toArray(function(err, doc) {
 						select._id = 0;
-						if(err)return handler.route.purse.dbError(handler, db);
+						if(err)return handler.route.baas.dbError(handler, db);
 					
 						collection.find({$and:[{objectId:{$ne:null}},where]}, select).limit(limit).sort(sort).skip(skip).toArray(function(err, docs){
-							if(err)return handler.route.purse.dbError(handler, db);
+							if(err)return handler.route.baas.dbError(handler, db);
 							
 							if(docs.length==0) {
 								handler.respond([], callback);
 							}else{
-								for(var i=0;i<handler.route.purse.api.defaultSchemaValues.length;i++) {
-									doc[0]._schema[handler.route.purse.api.defaultSchemaValues[i]] = "";
+								for(var i=0;i<handler.route.baas.api.defaultSchemaValues.length;i++) {
+									doc[0]._schema[handler.route.baas.api.defaultSchemaValues[i]] = "";
 								}
 								
 								for(var i=0;i<docs.length;i++) {
@@ -928,7 +928,7 @@ Purse.prototype.api = {
 		},
 		
 		del:function(handler, callback) {
-			if( handler.route.purse.api.isReserved(handler.path[1]) && !callback ) {
+			if( handler.route.baas.api.isReserved(handler.path[1]) && !callback ) {
 				var forbidden = true;
 				if(handler.user) {
 					if(handler.user.admin) {
@@ -942,15 +942,15 @@ Purse.prototype.api = {
 				}
 			}
 		
-			handler.route.purse.connect(".store."+handler.path[1], function(db, collection) {
+			handler.route.baas.connect(".store."+handler.path[1], function(db, collection) {
 				collection.find({objectId:parseInt(handler.path[2])}, {_id:0}).limit(1).toArray(function(err, docs){
-					if(err)return handler.route.purse.dbError(handler, db);
+					if(err)return handler.route.baas.dbError(handler, db);
 					
 					if(docs.length==0){
 						handler.respondWithDefault("Not Found", callback);
 					}else{
 						collection.remove({objectId:parseInt(handler.path[2])}, true, function(err, result) {
-							if(err)return handler.route.purse.dbError(handler, db);
+							if(err)return handler.route.baas.dbError(handler, db);
 							
 							handler.respond("", callback);
 						});
@@ -961,7 +961,7 @@ Purse.prototype.api = {
 		},
 		
 		info:function(handler, callback) {
-		/*	if( handler.route.purse.api.isReserved(handler.path[1]) && !callback ) {
+		/*	if( handler.route.baas.api.isReserved(handler.path[1]) && !callback ) {
 				var forbidden = true;
 				if(handler.user) {
 					if(handler.user.admin) {
@@ -975,9 +975,9 @@ Purse.prototype.api = {
 				}
 			}*/
 		
-			handler.route.purse.connect(".store."+handler.path[1], function(db, collection) {
+			handler.route.baas.connect(".store."+handler.path[1], function(db, collection) {
 				collection.find({$or:[{_schema:{$ne:null}},{_roles:{$ne:null}}]}, {_id:0}).limit(2).toArray(function(err, docs){
-					if(err)return handler.route.purse.dbError(handler, db);
+					if(err)return handler.route.baas.dbError(handler, db);
 				
 					if(docs.length==0){
 						handler.respondWithDefault("Not Found", callback);
@@ -1019,7 +1019,7 @@ Purse.prototype.api = {
 				return;
 			}
 		
-			handler.route.purse.auth.getUser(handler,function(h) {
+			handler.route.baas.auth.getUser(handler,function(h) {
 			
 				if(h.user) {
 					if(!h.user.admin && data.admin) {
@@ -1029,9 +1029,9 @@ Purse.prototype.api = {
 					data.admin = false;
 				}
 				
-				if(handler.route.purse.allowUserActivation) {
+				if(handler.route.baas.allowUserActivation) {
 					data.active = false;
-					data.activateCode = SHA1(Math.random().toString()+Purse.generateString(4,24,0,1,2));
+					data.activateCode = SHA1(Math.random().toString()+Baas.generateString(4,24,0,1,2));
 					
 					if(!data.email) {
 						handler.status = 409;
@@ -1040,14 +1040,14 @@ Purse.prototype.api = {
 					}
 				}
 				
-				data.salt = Purse.generateString(8,20,0,1,2);
+				data.salt = Baas.generateString(8,20,0,1,2);
 				data.password = SHA1(data.salt+data.password);
 				
 				handler.data = JSON.stringify(data);
 				handler.path = ["","users_"];
 				
 				handler.queryString =  encodeURIComponent( JSON.stringify({where:{$or:[{username:data.username},{email:data.email}]}}) );
-				handler.route.purse.api.store.query(handler, function(handler,r) {
+				handler.route.baas.api.store.query(handler, function(handler,r) {
 					
 					if(r.length>0){
 						handler.status = 409;
@@ -1072,11 +1072,11 @@ Purse.prototype.api = {
 						}
 					}else{
 						
-						handler.route.purse.api.store.create(handler, function(handler,r) {
-							if(handler.route.purse.allowUserActivation) {
+						handler.route.baas.api.store.create(handler, function(handler,r) {
+							if(handler.route.baas.allowUserActivation) {
 							
 								handler.data = JSON.parse(handler.data);
-								handler.route.purse._sendMessage(data.email,handler.route.purse._templateActivate,{url:handler.route.purse.externalUrl,handler:handler});
+								handler.route.baas._sendMessage(data.email,handler.route.baas._templateActivate,{url:handler.route.baas.externalUrl,handler:handler});
 							}
 						
 							handler.respond("", callback);
@@ -1111,14 +1111,14 @@ Purse.prototype.api = {
 			}
 			
 			var condition;
-			switch(handler.route.purse.loginAllowedType) {
-				case Purse.ALLOW_USERNAME_EMAIL:
+			switch(handler.route.baas.loginAllowedType) {
+				case Baas.ALLOW_USERNAME_EMAIL:
 					condition = {$or:[{username:data.user}, {email:data.user}]};
 					break;
-				case Purse.ALLOW_EMAIL:
+				case Baas.ALLOW_EMAIL:
 					condition = {email:data.user};
 					break;
-				case Purse.ALLOW_USERNAME:
+				case Baas.ALLOW_USERNAME:
 					condition = {username:data.user};
 					break;
 			}
@@ -1126,7 +1126,7 @@ Purse.prototype.api = {
 			handler.queryString =  encodeURIComponent( JSON.stringify({where:condition}) );
 			
 			handler.path[1] = "users_";
-			handler.route.purse.api.store.query(handler, function(handler,r) {
+			handler.route.baas.api.store.query(handler, function(handler,r) {
 				if(r.length == 0) {
 					handler.respondWithDefault("Unauthorized", callback);
 					return;
@@ -1140,7 +1140,7 @@ Purse.prototype.api = {
 						}else if(r.oneTimePassword==data.password) {
 							handler.path[2] = r.objectId;
 							handler.data = JSON.stringify({oneTimePassword:null});
-							handler.route.purse.api.store.update(handler,function(handler, r3) {});
+							handler.route.baas.api.store.update(handler,function(handler, r3) {});
 						}
 					}else if(r.password!=SHA1(r.salt+data.password)) {
 						handler.respondWithDefault("Unauthorized", callback);
@@ -1153,25 +1153,25 @@ Purse.prototype.api = {
 						return;
 					}
 					
-					var cookies = Purse.parseCookies(handler);
+					var cookies = Baas.parseCookies(handler);
 				
 					var session = cookies.s || handler.request.headers["Session-Id"];
 					
 					if(!session) session = null;
 					handler.path[1] = "sessions_";
 					handler.queryString =  encodeURIComponent( JSON.stringify({where:{$and:[{session:session},{userId:r.objectId}]}}) );
-					handler.route.purse.api.store.query(handler, function(err, r2) {
+					handler.route.baas.api.store.query(handler, function(err, r2) {
 						if(r2.length==0) {
 							if(session) {
 								handler.user = {session:session};
-								handler.route.purse.api.users.logout(handler, function(handler, r4) {});
+								handler.route.baas.api.users.logout(handler, function(handler, r4) {});
 							}
-							var sessionSecret = Purse.generateString(24,64,0,1,2);
+							var sessionSecret = Baas.generateString(24,64,0,1,2);
 							var loggedOn = new Date().toString();
 							var sha = SHA1(r.username+""+r.objectId+""+sessionSecret);
 							
 							handler.data = JSON.stringify({session:sha,sessionSecret:sessionSecret,userId:r.objectId,agent:handler.request.headers["user-agent"],ip:handler.request.connection.remoteAddress});
-							handler.route.purse.api.store.create(handler,function(handler, r3) {
+							handler.route.baas.api.store.create(handler,function(handler, r3) {
 								handler.addHeader("Set-Cookie", "s="+sha+"; Path=/ ");
 								handler.respond({username:r.username,session:sha,id:r.objectId}, callback);
 							});
@@ -1186,14 +1186,14 @@ Purse.prototype.api = {
 		logout:function(handler, callback) {
 			handler.path = [null,"sessions_"];
 			handler.queryString = JSON.stringify({where:{session:handler.user.session}});
-			handler.route.purse.api.store.query(handler, function(handler,r) {
+			handler.route.baas.api.store.query(handler, function(handler,r) {
 				if(!r[0]) {
 					handler.respondWithDefault("Bad Request", callback);
 					return;
 				}
 				r = r[0];
 				handler.path = ["","sessions_",r.objectId];
-				handler.route.purse.api.store.del(handler, function(handler,r) {
+				handler.route.baas.api.store.del(handler, function(handler,r) {
 				
 					handler.addHeader("Set-Cookie", "s=; Path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT");
 					handler.respond({message:"logged out"}, callback);
@@ -1204,7 +1204,7 @@ Purse.prototype.api = {
 		retrieve:function(handler, callback) {
 			if(handler.user.admin || handler.user.id==handler.path[1]){
 				handler.path = ["","users_",handler.path[1]];
-				handler.route.purse.api.store.retrieve(handler,function(handler, r) {
+				handler.route.baas.api.store.retrieve(handler,function(handler, r) {
 					delete r.password;
 					delete r.admin;
 					handler.respond(r, callback);
@@ -1233,14 +1233,14 @@ Purse.prototype.api = {
 			}
 			
 			if(data.password) {
-				data.salt = Purse.generateString(8,20,0,1,2);
+				data.salt = Baas.generateString(8,20,0,1,2);
 				data.password = SHA1(data.salt+data.password);
 			}
 			
 			if(handler.user.admin || handler.user.id==handler.path[1]){
 				handler.data = JSON.stringify(data);
 				handler.path = ["","users_",handler.path[1]];
-				handler.route.purse.api.store.update(handler,function(handler, r) {
+				handler.route.baas.api.store.update(handler,function(handler, r) {
 					handler.respond(r, callback);
 				});
 			}else{
@@ -1257,14 +1257,14 @@ Purse.prototype.api = {
 		
 			handler.path = ["","users_",handler.path[1]];
 
-			handler.route.purse.api.store.del(handler,function(handler, r) {
+			handler.route.baas.api.store.del(handler,function(handler, r) {
 				handler.respond(r, callback);
 			});
 		},
 		
 		query:function(handler, callback) {
 			handler.path = ["","users_"];
-			handler.route.purse.api.store.query(handler,function(handler, r) {
+			handler.route.baas.api.store.query(handler,function(handler, r) {
 				for(var i=0;i<r.length;i++) {
 					r[i].password = "hidden";
 					delete r[i].sessionSecret;
@@ -1282,10 +1282,10 @@ Purse.prototype.api = {
 			}
 			handler.path = ["","users_"];
 			handler.queryString = JSON.stringify({where:{activateCode:handler.queryString}});
-			handler.route.purse.api.store.query(handler,function(handler, r) {
+			handler.route.baas.api.store.query(handler,function(handler, r) {
 				handler.status = 301;
 				handler.addHeader("Content-Type","text/html");
-				handler.addHeader("Location", handler.route.purse._templateActivate.notFound);
+				handler.addHeader("Location", handler.route.baas._templateActivate.notFound);
 				
 				if(r.length==0) {
 					handler.respond("Not Found", callback);
@@ -1294,8 +1294,8 @@ Purse.prototype.api = {
 				
 				handler.path = ["","users_",r[0].objectId];
 				handler.data = JSON.stringify({active:true,activateCode:null});
-				handler.route.purse.api.store.update(handler,function(handler, r2) {
-					handler.addHeader("Location", handler.route.purse._templateActivate.complete);
+				handler.route.baas.api.store.update(handler,function(handler, r2) {
+					handler.addHeader("Location", handler.route.baas._templateActivate.complete);
 					handler.respond("Moved Permanently", callback);
 				});
 			});
@@ -1315,16 +1315,16 @@ Purse.prototype.api = {
 				return;
 			}
 			
-			data.oneTimePassword =  Purse.generateString(5,8,0,2);
+			data.oneTimePassword =  Baas.generateString(5,8,0,2);
 		
 			handler.path = ["","users_"];
 			handler.queryString =  encodeURIComponent( JSON.stringify({where:{email:data.email},select:{objectId:1}}) );
-			handler.route.purse.api.store.query(handler,function(handler, r) {
+			handler.route.baas.api.store.query(handler,function(handler, r) {
 				handler.path = ["","users_",r[0].objectId];
 				handler.data = JSON.stringify({oneTimePassword:data.oneTimePassword});
-				handler.route.purse.api.store.update(handler, function(handler, r) {
+				handler.route.baas.api.store.update(handler, function(handler, r) {
 					handler.respond(r, callback);
-					handler.route.purse._sendMessage(data.email,handler.route.purse._templateForgotPassword,{password:data.oneTimePassword,url:handler.route.purse.externalUrl,handler:handler});
+					handler.route.baas._sendMessage(data.email,handler.route.baas._templateForgotPassword,{password:data.oneTimePassword,url:handler.route.baas.externalUrl,handler:handler});
 				});
 			});		
 		}
@@ -1346,28 +1346,28 @@ Purse.prototype.api = {
 			}
 		
 			handler.path = ["","groups_"];
-			handler.route.purse.api.store.create(handler, function(handler,r) {
+			handler.route.baas.api.store.create(handler, function(handler,r) {
 					handler.respond("", callback);
 			});
 		},
 		
 		update:function(handler, callback) {
 			handler.path = ["","groups_",handler.path[1]];
-			handler.route.purse.api.store.update(handler,function(handler, r) {
+			handler.route.baas.api.store.update(handler,function(handler, r) {
 				handler.respond(r, callback);
 			});
 		},
 		
 		query:function(handler, callback) {
 			handler.path = ["","groups_"];
-			handler.route.purse.api.store.query(handler,function(handler, r) {
+			handler.route.baas.api.store.query(handler,function(handler, r) {
 				handler.respond(r, callback);
 			});
 		},
 		
 		del:function(handler, callback) {
 			handler.path = ["","groups_",handler.path[1]];
-			handler.route.purse.api.store.del(handler,function(handler, r) {
+			handler.route.baas.api.store.del(handler,function(handler, r) {
 				handler.respond(r, callback);
 			});
 		}
@@ -1390,18 +1390,18 @@ Purse.prototype.api = {
 			}
 			
 			handler.data = '{"name":"groups_","schema":{"name":"string","users":"array"},"roles":{}}';
-			handler.route.purse.api.store.createObject(handler, function(handler,r) {
+			handler.route.baas.api.store.createObject(handler, function(handler,r) {
 				handler.status = 200;
 			});
 			
 		
 			handler.data = '{"name":"sessions_","schema":{"userId":"number","session":"string","sessionSecret":"string","agent":"string","ip":"string"},"roles":{}}';
-			handler.route.purse.api.store.createObject(handler, function(handler,r) {
+			handler.route.baas.api.store.createObject(handler, function(handler,r) {
 				handler.status = 200;
 			});
 			
 			handler.data = '{"name":"users_","schema":{"username":"string","password":"string","email":"string","activateCode":"string","active":"boolean","admin":"boolean","loggedOn":"string","oneTimePassword":"string","salt":"string"},"roles":{}}';
-			handler.route.purse.api.store.createObject(handler, function(handler,r) {
+			handler.route.baas.api.store.createObject(handler, function(handler,r) {
 				if(handler.status == 409) {
 					handler.status = 501;
 					handler.respond("");
@@ -1412,11 +1412,11 @@ Purse.prototype.api = {
 				
 				data.admin = true;
 				data.active = true;
-				data.salt = Purse.generateString(8,20,0,1,2);
+				data.salt = Baas.generateString(8,20,0,1,2);
 				data.password = SHA1(data.salt+data.password);
 				handler.data = JSON.stringify(data);
 				
-				handler.route.purse.api.store.create(handler, function(handler,r) {
+				handler.route.baas.api.store.create(handler, function(handler,r) {
 					handler.respond("");
 				});
 			});
@@ -1429,17 +1429,17 @@ Purse.prototype.api = {
 				handler.respondWithDefault("Internal Server Error");
 			}else{
 				handler.addHeader("Content-Type","text/html");
-				handler.respond("<span style='font-size:11px;font-weight:bold'>Sandbox Store: "+handler.route.purse.name+"</span><br><br>"+data);
+				handler.respond("<span style='font-size:11px;font-weight:bold'>Sandbox Store: "+handler.route.baas.name+"</span><br><br>"+data);
 			}
 			
 		});
 	}
 }
 
-Purse.prototype.auth = {
+Baas.prototype.auth = {
 	getUser:function(passthrough, callback) {
 		
-		var cookies = Purse.parseCookies(passthrough);
+		var cookies = Baas.parseCookies(passthrough);
 		var session = cookies.s || passthrough.request.headers["session-id"];
 		if(!session){
 			if(typeof callback=="function") { 
@@ -1455,7 +1455,7 @@ Purse.prototype.auth = {
 		
 		passthrough.path = ["","sessions_"];
 		passthrough.queryString = encodeURIComponent(JSON.stringify({where:{session:session}}));
-		passthrough.route.purse.api.store.query(passthrough, function(passthrough,r) {
+		passthrough.route.baas.api.store.query(passthrough, function(passthrough,r) {
 			if(r.length==0) {
 				passthrough.check(0);
 				return;
@@ -1469,7 +1469,7 @@ Purse.prototype.auth = {
 			
 			passthrough.queryString = encodeURIComponent(JSON.stringify({where:{objectId:r.userId}}));
 			passthrough.path = ["","users_"];
-			passthrough.route.purse.api.store.query(passthrough, function(passthrough,r2) {
+			passthrough.route.baas.api.store.query(passthrough, function(passthrough,r2) {
 			
 				if(r2.length==0){
 					if(typeof callback=="function") {
@@ -1512,7 +1512,7 @@ Purse.prototype.auth = {
 	},
 	
 	isAdmin:function(passthrough) {
-		passthrough.route.purse.auth.getUser(passthrough,function(passthrough) {
+		passthrough.route.baas.auth.getUser(passthrough,function(passthrough) {
 			if(!passthrough.user) {
 				passthrough.check(0);
 				return;
@@ -1527,7 +1527,7 @@ Purse.prototype.auth = {
 	},
 	
 	checkRoles:function(passthrough) {
-		passthrough.route.purse.auth.getUser(passthrough,function(passthrough) {
+		passthrough.route.baas.auth.getUser(passthrough,function(passthrough) {
 			
 			if(!passthrough.user) {
 				passthrough.user = {admin:null,id:null};
@@ -1536,7 +1536,7 @@ Purse.prototype.auth = {
 			if(passthrough.user.admin) {
 				passthrough.check(1);
 			}else{
-				passthrough.route.purse.connect(".store."+passthrough.path[1], function(db, collection) {
+				passthrough.route.baas.connect(".store."+passthrough.path[1], function(db, collection) {
 					collection.find({_roles: {$ne:null}},{_roles:1,_id:0}).limit(1).toArray(function(err, docs) {
 						if(docs.length==0) {
 							passthrough.check(0);
@@ -1556,12 +1556,12 @@ Purse.prototype.auth = {
 								else if(docs[passthrough.route.method].user.indexOf(passthrough.user.id)>-1) {
 									passthrough.check(1);
 								}else if(docs[passthrough.route.method].group){
-									passthrough.route.purse.auth.checkForGroup(docs[passthrough.route.method].group,passthrough);
+									passthrough.route.baas.auth.checkForGroup(docs[passthrough.route.method].group,passthrough);
 								}else{
 									passthrough.check(0);
 								}
 							}else if(docs[passthrough.route.method].group){
-								passthrough.route.purse.auth.checkForGroup(docs[passthrough.route.method].group,passthrough);
+								passthrough.route.baas.auth.checkForGroup(docs[passthrough.route.method].group,passthrough);
 							}else{
 								passthrough.check(0);
 							}
@@ -1582,7 +1582,7 @@ Purse.prototype.auth = {
 		passthrough.queryString = encodeURIComponent(JSON.stringify({where:{objectId:{$in:groups}},limit:0}));
 		passthrough.path = ["","groups_"];
 	
-		passthrough.route.purse.api.store.query(passthrough,function(passthrough,r){
+		passthrough.route.baas.api.store.query(passthrough,function(passthrough,r){
 			passthrough.path = path;
 			passthrough.queryString = queryString;
 			
@@ -1605,9 +1605,9 @@ Purse.prototype.auth = {
 	}
 }
 
-Purse.prototype.addRoute = function(obj) {
+Baas.prototype.addRoute = function(obj) {
 	obj.path = "run/"+obj.path;
-	obj.purse = this;
+	obj.baas = this;
 	obj._action = obj.action;
 	if(obj.roles && !obj.authLevel) {
 		if(obj.roles.user) {
@@ -1622,10 +1622,10 @@ Purse.prototype.addRoute = function(obj) {
 	}
 	
 	obj.action = function(handler) {
-		handler.store = handler.route.purse.api.store;
-		handler.users = handler.route.purse.api.users;
-		handler.groups = handler.route.purse.api.groups;
-		handler.auth = handler.route.purse.auth;
+		handler.store = handler.route.baas.api.store;
+		handler.users = handler.route.baas.api.users;
+		handler.groups = handler.route.baas.api.groups;
+		handler.auth = handler.route.baas.auth;
 		
 		handler.save = function() {
 			this._saved = 
@@ -1666,7 +1666,7 @@ Purse.prototype.addRoute = function(obj) {
 				}
 			}
 			if(obj.roles.group) {
-				handler.route.purse.auth.checkForGroup(obj.roles.group,handler,function(handler,value) {
+				handler.route.baas.auth.checkForGroup(obj.roles.group,handler,function(handler,value) {
 					if(value==1) {
 						obj._action(handler);
 					}else{

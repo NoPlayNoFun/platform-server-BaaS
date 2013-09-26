@@ -73,43 +73,43 @@
 
 
 	<script>
-		var Purse = function(url) {
+		var Baas = function(url) {
 			this._initialize(url);
 		}
 		
-		Purse.prototype._initialize = function(url) {
+		Baas.prototype._initialize = function(url) {
 			this.url = url;
 			this._sessionuser = localStorage._sessionuser || null; 
 			if(this._sessionuser) {
 				this._sessionuser = JSON.parse(localStorage._sessionuser);
 			}
 			
-			this.store.purse = this;
-			this.user.purse = this;
-			this.group.purse = this;
+			this.store.baas = this;
+			this.user.baas = this;
+			this.group.baas = this;
 		}
 		
-		Purse.prototype.get = function(path,query,callback) {
+		Baas.prototype.get = function(path,query,callback) {
 			this._connect("get", path, query, null, callback);
 		}
 		
-		Purse.prototype.post = function(path,query,data,callback) {
+		Baas.prototype.post = function(path,query,data,callback) {
 			this._connect("post", path, query, data, callback);
 		}
 		
-		Purse.prototype.put = function(path,query,data,callback) {
+		Baas.prototype.put = function(path,query,data,callback) {
 			this._connect("put", path, query, data, callback);
 		}
 		
-		Purse.prototype.query = function(path,query,callback) {
+		Baas.prototype.query = function(path,query,callback) {
 			this._connect("get", path, query, null, callback);
 		}
 		
-		Purse.prototype.del = function(path,query,callback) {
+		Baas.prototype.del = function(path,query,callback) {
 			this._connect("delete", path, query, null, callback);
 		}
 		
-		Purse.prototype._connect = function(method, path, query, data, callback) {
+		Baas.prototype._connect = function(method, path, query, data, callback) {
 			if(query) {
 				query = "?"+JSON.stringify(query);
 			}else{
@@ -143,71 +143,71 @@
 			client.send(data);
 		}
 		
-		Purse.prototype.store = {
+		Baas.prototype.store = {
 			add:function(name, data, callback) {
-				this.purse.post("store/"+name, null, data, function(response){
+				this.baas.post("store/"+name, null, data, function(response){
 					callback(response);
 				});
 			},
 			
 			retrieve:function(name, id, callback) {
-				this.purse.get("store/"+name+"/"+id, null, function(response){
+				this.baas.get("store/"+name+"/"+id, null, function(response){
 					callback(response);
 				});
 			},
 			
 			update:function(name, id, data, callback) {
-				this.purse.put("store/"+name+"/"+id, null, data, function(response){
+				this.baas.put("store/"+name+"/"+id, null, data, function(response){
 					callback(response);
 				});
 			},
 			
 			query:function(name, query, callback) {
-				this.purse.get("store/"+name,query, function(response){
+				this.baas.get("store/"+name,query, function(response){
 					callback(response);
 				});
 			},
 			
 			remove:function(name, id, callback) {
-				this.purse.del("store/"+name+"/"+id, null, function(response){
+				this.baas.del("store/"+name+"/"+id, null, function(response){
 					callback(response);
 				});
 			},
 			
 			info:function(name, callback) {
-				this.purse.get("store/"+name+"/info", null, function(response){
+				this.baas.get("store/"+name+"/info", null, function(response){
 					callback(response);
 				});
 			},
 			
 			createObject:function(name, schema, roles, callback) {
 				var data = {name:name, schema:schema, roles:roles};
-				this.purse.post("store", null, data, function(response){
+				this.baas.post("store", null, data, function(response){
 					callback(response);
 				});
 			},
 			
 			updateObject:function(name, schema, roles, callback) {
 				var data = {name:name, schema:schema, roles:roles};
-				this.purse.put("store", null, data, function(response){
+				this.baas.put("store", null, data, function(response){
 					callback(response);
 				});
 			},
 			
 			getObjects:function(callback) {
-				this.purse.get("store",null, function(response){
+				this.baas.get("store",null, function(response){
 					callback(response);
 				});
 			}
 		}
 		
-		Purse.prototype.user = {
+		Baas.prototype.user = {
 			login:function(username, password, callback) {
-				var purse = this.purse;
-				this.purse.get("user/login",{user:username, password:password}, function(response){
+				var baas = this.baas;
+				this.baas.get("user/login",{user:username, password:password}, function(response){
 					if(response.status==200) {
 					//	localStorage._sessionuser = JSON.stringify(response.response);
-					//	purse._sessionuser = response.response;
+					//	baas._sessionuser = response.response;
 					}
 				
 					callback(response);
@@ -215,48 +215,48 @@
 			}, 
 			
 			logout:function(callback) {
-				var purse = this.purse;
-				this.purse.get("user/logout",null,function(response){
+				var baas = this.baas;
+				this.baas.get("user/logout",null,function(response){
 				
 					delete localStorage._sessionuser;
-					delete purse._sessionuser;
+					delete baas._sessionuser;
 					
 					callback(response);
 				});
 			},
 			
 			add:function(data, callback) {
-				this.purse.post("user", null, data, function(response){
+				this.baas.post("user", null, data, function(response){
 					callback(response);
 				});
 			},
 			
 			retrieve:function(id, callback) {
-				this.purse.get("user/"+id, null, function(response){
+				this.baas.get("user/"+id, null, function(response){
 					callback(response);
 				});
 			},
 			
 			update:function(id, data, callback) {
-				this.purse.put("user/"+id, null, data, function(response) {
+				this.baas.put("user/"+id, null, data, function(response) {
 					callback(response);
 				});
 			},
 			
 			activate:function(code, callback) {
-				this.purse.get("user/activate/"+code, null, function(response){
+				this.baas.get("user/activate/"+code, null, function(response){
 					callback(response);
 				});
 			},
 			
 			query:function(query, callback) {
-				this.purse.get("user",query, function(response){
+				this.baas.get("user",query, function(response){
 					callback(response);
 				});
 			},
 			
 			remove:function(id, callback) {
-				this.purse.del("user/"+id, null, function(response){
+				this.baas.del("user/"+id, null, function(response){
 					callback(response);
 				});
 			},
@@ -270,27 +270,27 @@
 			}
 		}
 		
-		Purse.prototype.group = {
+		Baas.prototype.group = {
 			add:function(data, callback) {
-				this.purse.post("group", null, data, function(response){
+				this.baas.post("group", null, data, function(response){
 					callback(response);
 				});
 			},
 			
 			update:function(id, data, callback) {
-				this.purse.put("group/"+id, null, data, function(response){
+				this.baas.put("group/"+id, null, data, function(response){
 					callback(response);
 				});
 			},
 			
 			query:function(query, callback) {
-				this.purse.get("group",query, function(response){
+				this.baas.get("group",query, function(response){
 					callback(response);
 				});
 			},
 			
 			remove:function(id, callback) {
-				this.purse.del("group/"+id, null, function(response){
+				this.baas.del("group/"+id, null, function(response){
 					callback(response);
 				});
 			}
@@ -302,7 +302,7 @@
 	
 	<script>
 		
-		var p = new Purse(window.location.protocol+"//"+window.location.host);
+		var p = new Baas(window.location.protocol+"//"+window.location.host);
 		var get = function(id) {
 			return document.getElementById(id);
 		}
