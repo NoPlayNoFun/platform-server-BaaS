@@ -1,7 +1,9 @@
 # Node BaaS
 BaaS is a "backend-as-a-service" permissions level data store with a RESTful API. 
 
-## Setup 
+ REST reference [table of contents](#table-of-contents)
+
+## Quick Setup 
 
    * Install and start mongoDB ([More info](http://docs.mongodb.org/manual/installation/))
    
@@ -12,6 +14,7 @@ BaaS is a "backend-as-a-service" permissions level data store with a RESTful API
    * Create a `main.js` file. This is the file you will use to configure baas
   
 ```javascript
+
         var baas = require("baas");
         var store = baas.createStore("window",8080,"127.0.0.1");
 ```
@@ -20,15 +23,14 @@ BaaS is a "backend-as-a-service" permissions level data store with a RESTful API
 
   * Create an admin account by sending a `POST` request to `http://127.0.0.1:8080/setup` with data `{"username":"[username]","password":"[password]"}`
 
-  Your store is now ready to configure/run. To view/edit the data go to `http://127.0.0.1:8080/sandbox`
+  Your store is now ready to configure/run. To view/edit the data go to `http://127.0.0.1:8080/view`
 
 ## Configure
-
-### store.allowUserActivation
+#### store.allowUserActivation
 
 Boolean. Default `true`. If true, will send an email to recipient upon user creation.
 
-### store.loginAllowedType
+#### store.loginAllowedType
 
 Flag indicating whether to allow for email and/or username as a value for the user login. 
 
@@ -38,16 +40,16 @@ Flag indicating whether to allow for email and/or username as a value for the us
 
 `baas.ALLOW_EMAIL`
 
-### store.setMongoDB(host, port)
+#### store.setMongoDB(host, port)
 
  By default, the mongoDB host and port are set based on the local system environment variable. Otherwise use this method to set a custom host and port. 
 
-### store.configureSMTP(email, password)
+#### store.configureSMTP(email, password)
  `email` Email address
 
  `password` base-64 encoded password
 
-### store.setTemplateForgotPassword(from, subject, htmlBody, textBody)
+#### store.setTemplateForgotPassword(from, subject, htmlBody, textBody)
   
   `from` Email address sender. Default `null`
 
@@ -57,7 +59,7 @@ Flag indicating whether to allow for email and/or username as a value for the us
 
   `textBody` Plain-text message body
 
-### store.setTemplateActivate(from, subject, htmlBody, textBody, complete)
+#### store.setTemplateActivate(from, subject, htmlBody, textBody, complete)
  
   `from` Email address sender. Default `null`
 
@@ -69,19 +71,60 @@ Flag indicating whether to allow for email and/or username as a value for the us
 
   `complete` URL forward upon activation
 
-### store.addRoute(routeObject)
+#### store.addRoute(routeObject)
 
-Allows you to create custom rest calls. See [Custom routes]() for more info
+Allows you to create custom rest calls. See [Custom routes](#custom-routes) for more info
 
 
-# &nbsp;
+
+
 # REST Reference
+
+##Table of contents
+####[Store](#Store)
+
+* [Create new store](#create-new-store)
+* [Update existing store](#update-existing-store)
+* [Get store names](#get-store-names)
+* [Add object to store](#add-object-to-store)
+* [Get object from store](#get-object-from-store)
+* [Update object in store](#update-object-from-store)
+* [Query objects in store](#query-objects-in-store)
+* [Delete object from store](#delete-object-from-store)
+* [Get info for store](#get-info-for-store)
+
+####[Users](#users)
+
+* [Log in](#login)
+* [Log out](#log-out)
+* [Create new user](#create-new-user)
+* [Update user](#update-user)
+* [Get user](#get-user)
+* [Query users](#query-users)
+* [Delete user](#delete-user)
+* [Activate user](#activate-user)
+* [Forgot password](#forgot-password)
+
+####[Groups](#groups)
+
+* [Create new group](#create-new-group)
+* [Update groups](#update-groups)
+* [Query groups](#query-groups)
+* [Delete a group](#delete-a-group)
+
+####[Custom routes](#custom-routes)
+
+####[Query operators](#query-operators)
+
+* [Comparison](#comparison)
+* [Logical](#logical)
+
 
 ##Store
 
 
 
-###Create new store 
+####Create new store 
  
 *Admin only*
 
@@ -104,7 +147,7 @@ Success status `201`
 > 
 > *Example* `{"get":{"user":[1,3,28],"group":[4,5]}, "put":{"user":["."]}}` Meaning users 1,3,28 and any members of groups 4 and 5 can call the `get` method for this store, and any logged in user can call the `put` method for this store. 
 
-###Update existing store
+####Update existing store
 
 *Admin only*
 
@@ -123,7 +166,7 @@ Success status `200`
 > 
 > *Example* `{"get":{"user":[-1,-3,29],"group":[-4,-5]}, "put":{"user":["-."]}}` Meaning users 1,3 and any members of groups 4 and 5 can no longer call the `get` method and user 29 can call the `get` method for this store, and any logged in user can no longer call the `put` method for this store. 
 
-###Get store names
+####Get store names
 
 *Admin only*
 
@@ -135,7 +178,7 @@ Success status `200`
 
 Returns an array of store names.
 
-### Add object to store
+#### Add object to store
 
 
 URL `/store/[store name]/`
@@ -151,7 +194,7 @@ An object represented by the schema values set when a store is created.
 
 If value doesn't match schema type, status will return a `400` bad request.
 
-### Get object from store
+#### Get object from store
 
 URL `/store/[store name]/[object id]/`
 
@@ -162,7 +205,7 @@ Success status `200`
 Returns the requested object
 
 
-### Update object in store
+#### Update object in store
 
 URL `/store/[store name]/[object id]/`
 
@@ -203,7 +246,7 @@ Returns an array of objects based on the query qualifications
 `select` (Optional) Only return objects with specfic column names denoted in this object
 
 
-### Delete object from store
+#### Delete object from store
 
 URL `/store/[store name]/[object id]/`
 
@@ -213,7 +256,7 @@ Success status `200`
 
 Returns a HTTP status of `404 Not Found` if object doesn't exist 
 
-### Get info for store
+#### Get info for store
 
 *Admin only*
 
@@ -227,7 +270,7 @@ Returns the `roles` and `schema` objects
 
 ## Users
 
-### Login
+#### Login
 
 URL `/user/login/`
 
@@ -250,7 +293,7 @@ or
     Authorization: Basic [base64 of user name and password]
 
 
-###Log out 
+####Log out 
 
 URL `/user/logout/`
 
@@ -261,7 +304,7 @@ Success status `200`
 Sends an expired null session cookie. 
 
 
-###Create new user
+####Create new user
 
 URL `/user/`
 
@@ -294,7 +337,7 @@ Updates user object values. Must be logged in as the requesting user, or an admi
 See [Update object in store](todo) for more info
 
 
-###Get user 
+####Get user 
 
 URL `/user/[user id]/`
 
@@ -304,7 +347,7 @@ Success status `200`
 
 Returns a store object representing user information. Must be logged in as the requesting user, or an admin. 
 
-###Query users
+####Query users
 
 *Admin only*
 
@@ -317,7 +360,7 @@ Success status `200`
 Returns an array of user objects based on the query filter. See [Query objects from store](todo) for more info
 
 
-### Delete user
+#### Delete user
 
 URL `/user/[user id]/`
 
@@ -327,7 +370,7 @@ Success status `200`
 
 Deletes the user. Must be logged in as the requesting user, or an admin. 
 
-### Activate user
+#### Activate user
 
 URL `/user/activate`
 
@@ -341,7 +384,7 @@ Activates a user associated with a certain activation code
 
     ?[activation code]
 
-###Forgot password
+#### Forgot password
 
 URL `/user/forgotpassword/`
 
@@ -360,7 +403,7 @@ Sends a temporary one-time-use password to requested email address
 
 Groups are collections of users for the purpose of allowing its members to access permission-level based api calls. 
 
-### Create new group
+#### Create new group
 
 *Admin only*
 
@@ -379,7 +422,7 @@ Success status `201`
 `name` (Optional) The name of the group
 
 
-### Update group
+#### Update group
 
 *Admin only*
 
@@ -391,7 +434,7 @@ Success status `200`
 
 Updates group object values. See [Update object in store](todo) for more info
 
-### Query groups
+#### Query groups
 
 *Admin only*
 
@@ -419,7 +462,7 @@ The previous set of methods listed above are the building blocks for building cu
 
 To add a custom route, you'll use the following method in your `main.js` file. 
 
-##### store.addRoute(routeObject)
+#### store.addRoute(routeObject)
 
 **`routeObject`** requires the following values to be set:
 
