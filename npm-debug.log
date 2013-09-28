@@ -1,0 +1,153 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'publish' ]
+2 info using npm@1.2.11
+3 info using node@v0.8.21
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 verbose publish [ '.' ]
+6 verbose read json C:\Users\jj.DEADWOOD\Documents\GitHub\BaaS\package.json
+7 verbose cache add [ '.', null ]
+8 verbose cache add name=undefined spec="." args=[".",null]
+9 verbose parsed url { pathname: '.', path: '.', href: '.' }
+10 silly lockFile 3a52ce78- .
+11 verbose lock . C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\3a52ce78-.lock
+12 verbose read json package.json
+13 verbose tar pack [ 'C:\\Users\\JJ075A~1.DEA\\AppData\\Local\\Temp\\npm-10904\\1380325456414-0.7410724393557757\\tmp.tgz',
+13 verbose tar pack   '.' ]
+14 verbose tarball C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\tmp.tgz
+15 verbose folder .
+16 info prepublish baas@1.0.3
+17 silly lockFile 3a52ce78- .
+18 verbose lock . C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\3a52ce78-.lock
+19 silly lockFile 53d41d2c-56414-0-7410724393557757-tmp-tgz C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\tmp.tgz
+20 verbose lock C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\tmp.tgz C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\53d41d2c-56414-0-7410724393557757-tmp-tgz.lock
+21 silly lockFile 3a52ce78- .
+22 silly lockFile 3a52ce78- .
+23 silly lockFile 53d41d2c-56414-0-7410724393557757-tmp-tgz C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\tmp.tgz
+24 silly lockFile 53d41d2c-56414-0-7410724393557757-tmp-tgz C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\tmp.tgz
+25 verbose tar unpack C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\tmp.tgz
+26 silly lockFile b5cee089-56414-0-7410724393557757-package C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\package
+27 verbose lock C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\package C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\b5cee089-56414-0-7410724393557757-package.lock
+28 silly lockFile 53d41d2c-56414-0-7410724393557757-tmp-tgz C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\tmp.tgz
+29 verbose lock C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\tmp.tgz C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\53d41d2c-56414-0-7410724393557757-tmp-tgz.lock
+30 silly gunzTarPerm modes [ '755', '644' ]
+31 silly gunzTarPerm extractEntry package.json
+32 silly gunzTarPerm modified mode [ 'package.json', 438, 420 ]
+33 silly gunzTarPerm extractEntry .npmignore
+34 silly gunzTarPerm modified mode [ '.npmignore', 438, 420 ]
+35 silly gunzTarPerm extractEntry baas.js
+36 silly gunzTarPerm modified mode [ 'baas.js', 438, 420 ]
+37 silly gunzTarPerm extractEntry .gitattributes
+38 silly gunzTarPerm modified mode [ '.gitattributes', 438, 420 ]
+39 silly gunzTarPerm extractEntry readme.md
+40 silly gunzTarPerm modified mode [ 'readme.md', 438, 420 ]
+41 silly gunzTarPerm extractEntry sandbox.html
+42 silly gunzTarPerm modified mode [ 'sandbox.html', 438, 420 ]
+43 verbose read json C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\package\package.json
+44 silly lockFile b5cee089-56414-0-7410724393557757-package C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\package
+45 silly lockFile b5cee089-56414-0-7410724393557757-package C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\package
+46 silly lockFile 53d41d2c-56414-0-7410724393557757-tmp-tgz C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\tmp.tgz
+47 silly lockFile 53d41d2c-56414-0-7410724393557757-tmp-tgz C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\tmp.tgz
+48 verbose from cache C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\package\package.json
+49 verbose tar pack [ 'C:\\Users\\jj.DEADWOOD\\AppData\\Roaming\\npm-cache\\baas\\1.0.3\\package.tgz',
+49 verbose tar pack   'C:\\Users\\JJ075A~1.DEA\\AppData\\Local\\Temp\\npm-10904\\1380325456414-0.7410724393557757\\package' ]
+50 verbose tarball C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package.tgz
+51 verbose folder C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\package
+52 silly lockFile b5cee089-56414-0-7410724393557757-package C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\package
+53 verbose lock C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\package C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\b5cee089-56414-0-7410724393557757-package.lock
+54 silly lockFile 9d01d79b-npm-cache-baas-1-0-3-package-tgz C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package.tgz
+55 verbose lock C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package.tgz C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\9d01d79b-npm-cache-baas-1-0-3-package-tgz.lock
+56 silly lockFile b5cee089-56414-0-7410724393557757-package C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\package
+57 silly lockFile b5cee089-56414-0-7410724393557757-package C:\Users\JJ075A~1.DEA\AppData\Local\Temp\npm-10904\1380325456414-0.7410724393557757\package
+58 silly lockFile 9d01d79b-npm-cache-baas-1-0-3-package-tgz C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package.tgz
+59 silly lockFile 9d01d79b-npm-cache-baas-1-0-3-package-tgz C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package.tgz
+60 silly lockFile 17682677-ing-npm-cache-baas-1-0-3-package C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package
+61 verbose lock C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\17682677-ing-npm-cache-baas-1-0-3-package.lock
+62 silly lockFile 17682677-ing-npm-cache-baas-1-0-3-package C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package
+63 silly lockFile 17682677-ing-npm-cache-baas-1-0-3-package C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package
+64 verbose tar unpack C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package.tgz
+65 silly lockFile 17682677-ing-npm-cache-baas-1-0-3-package C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package
+66 verbose lock C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\17682677-ing-npm-cache-baas-1-0-3-package.lock
+67 silly lockFile 9d01d79b-npm-cache-baas-1-0-3-package-tgz C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package.tgz
+68 verbose lock C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package.tgz C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\9d01d79b-npm-cache-baas-1-0-3-package-tgz.lock
+69 silly gunzTarPerm modes [ '755', '644' ]
+70 silly gunzTarPerm extractEntry package.json
+71 silly gunzTarPerm modified mode [ 'package.json', 438, 420 ]
+72 silly gunzTarPerm extractEntry .npmignore
+73 silly gunzTarPerm modified mode [ '.npmignore', 438, 420 ]
+74 silly gunzTarPerm extractEntry baas.js
+75 silly gunzTarPerm modified mode [ 'baas.js', 438, 420 ]
+76 silly gunzTarPerm extractEntry .gitattributes
+77 silly gunzTarPerm modified mode [ '.gitattributes', 438, 420 ]
+78 silly gunzTarPerm extractEntry readme.md
+79 silly gunzTarPerm modified mode [ 'readme.md', 438, 420 ]
+80 silly gunzTarPerm extractEntry sandbox.html
+81 silly gunzTarPerm modified mode [ 'sandbox.html', 438, 420 ]
+82 verbose read json C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package\package.json
+83 silly lockFile 17682677-ing-npm-cache-baas-1-0-3-package C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package
+84 silly lockFile 17682677-ing-npm-cache-baas-1-0-3-package C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package
+85 silly lockFile 9d01d79b-npm-cache-baas-1-0-3-package-tgz C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package.tgz
+86 silly lockFile 9d01d79b-npm-cache-baas-1-0-3-package-tgz C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package.tgz
+87 silly shasum updated bytes 18972
+88 info shasum 57da5235cd551eb02de88be0769375b20f380b4b
+88 info shasum C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package.tgz
+89 verbose from cache C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package\package.json
+90 verbose chmod C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package.tgz 644
+91 silly chown skipping for windows C:\Users\jj.DEADWOOD\AppData\Roaming\npm-cache\baas\1.0.3\package.tgz
+92 silly lockFile 3a52ce78- .
+93 silly publish { name: 'baas',
+93 silly publish   description: 'Node Back-end as a service. A permissions level server-side data store with a RESTful API.',
+93 silly publish   version: '1.0.3',
+93 silly publish   author: { name: 'JJ Bateman' },
+93 silly publish   contributors: [ { name: 'JJ Bateman', email: 'jjbtmn+github@gmail.com' } ],
+93 silly publish   dependencies: { drest: '1.1.6', mongodb: '1.3.6', nodemailer: '0.4.3' },
+93 silly publish   keywords:
+93 silly publish    [ 'backend',
+93 silly publish      'baas',
+93 silly publish      'store',
+93 silly publish      'database',
+93 silly publish      'data',
+93 silly publish      'web',
+93 silly publish      'rest',
+93 silly publish      'restful',
+93 silly publish      'router',
+93 silly publish      'api',
+93 silly publish      'login',
+93 silly publish      'permissions',
+93 silly publish      'session',
+93 silly publish      'authentication' ],
+93 silly publish   repository: { type: 'git', url: 'git://github.com/jjbateman/baas' },
+93 silly publish   main: 'baas.js',
+93 silly publish   readme: '# Node BaaS\r\nStore is a permissions level server-side data store with a RESTful API. \r\n\r\n## Setup \r\n\r\n   * Install and start mongoDB ([More info](http://docs.mongodb.org/manual/installation/))\r\n   \r\n   * Install `BaaS`\r\n    \r\n        npm install baas\r\n\r\n   * Create a `main.js` file. This is the file you will use to configure baas\r\n  \r\n```javascript\r\n\r\n        var baas = require("baas");\r\n        var store = baas.createStore("window",8080,"127.0.0.1");\r\n```\r\n\r\n  * run `node main.js`\r\n\r\n  * Create an admin account by sending a `POST` request to `http://127.0.0.1:8080/setup` with data `{"username":"[username]","password":"[password]"}`\r\n\r\n  Your store is now ready to configure/run. To view/edit the data go to `http://127.0.0.1:8080/sandbox`\r\n\r\n## Configure\r\n\r\n### store.allowUserActivation\r\n\r\nBoolean. Default `true`. If true, will send an email to recipient upon user creation.\r\n\r\n### store.loginAllowedType\r\n\r\nFlag indicating whether to allow for email and/or username as a value for the user login. \r\n\r\n`baas.ALLOW_USERNAME_EMAIL` (Default)\r\n\r\n`baas.ALLOW_USERNAME`\r\n\r\n`baas.ALLOW_EMAIL`\r\n\r\n### store.setMongoDB(host, port)\r\n\r\n By default, the mongoDB host and port are set based on the local system environment variable. Otherwise use this method to set a custom host and port. \r\n\r\n### store.configureSMTP(email, password)\r\n `email` Email address\r\n\r\n `password` base-64 encoded password\r\n\r\n### store.setTemplateForgotPassword(from, subject, htmlBody, textBody)\r\n  \r\n  `from` Email address sender. Default `null`\r\n\r\n  `subject` Message subject\r\n\r\n  `htmlBody` Rich-text message body\r\n\r\n  `textBody` Plain-text message body\r\n\r\n### store.setTemplateActivate(from, subject, htmlBody, textBody, complete)\r\n \r\n  `from` Email address sender. Default `null`\r\n\r\n  `subject` Message subject\r\n\r\n  `htmlBody` Rich-text message body\r\n\r\n  `textBody` Plain-text message body\r\n\r\n  `complete` URL forward upon activation\r\n\r\n### store.addRoute(routeObject)\r\n\r\nAllows you to create custom rest calls. See [Custom routes]() for more info\r\n\r\n\r\n# &nbsp;\r\n# REST Reference\r\n\r\n##Store\r\n\r\n\r\n\r\n###Create new store \r\n \r\n*Admin only*\r\n\r\nURL `/store/`\r\n\r\nMethod `POST`\r\n\r\nSuccess status `201`\r\n\r\n######Post Data\r\n     {"name":"[store name]", "schema":{"[column name]":"[type]"}, "roles":{"get":{"user":[user objectIds], "group":[group objectIds]}}}\r\n\r\n>`name` The store name\r\n\r\n>`schema` An object containing column name keys and type values used for validation when entering store data. Valid types are `string` `number` `boolean` `array` and `object`.  \r\n>\r\n> *Example* `{"column1":"string","column2":"boolean","column3":"array"}`\r\n\r\n> `roles` An object containing method keys (`get`,`post`,`put`,`delete`,`query`) and object values. Those objects can contain `user` or `group` keys, and array values containing objectIds and allow strings `"*"` for any/all access to the method, and `"."` for any logged in user to access the method.  \r\n> \r\n> *Example* `{"get":{"user":[1,3,28],"group":[4,5]}, "put":{"user":["."]}}` Meaning users 1,3,28 and any members of groups 4 and 5 can call the `get` method for this store, and any logged in user can call the `put` method for this store. \r\n\r\n###Update existing store\r\n\r\n*Admin only*\r\n\r\nURL `/store/[store name]/`\r\n\r\nMethod `PUT`\r\n\r\nSuccess status `200`\r\n\r\n######Post Data\r\n     {"schema":{"[column name]":"[type]"}, "roles":{"get":{"user":[user objectIds], "group":[group objectIds]}}}\r\n\r\n>`schema` (Optional) Modify or add column names and types to the store. *See Create new store*\r\n\r\n> `roles` (Optional)  An object containing method keys (`get`,`post`,`put`,`delete`,`query`) and object values. Those objects can contain `user` or `group` keys, and array values containing objectIds and allow strings `"*"` for any/all access to the method, and `"."` for any logged in user to access the method.  \r\n> \r\n> *Example* `{"get":{"user":[-1,-3,29],"group":[-4,-5]}, "put":{"user":["-."]}}` Meaning users 1,3 and any members of groups 4 and 5 can no longer call the `get` method and user 29 can call the `get` method for this store, and any logged in user can no longer call the `put` method for this store. \r\n\r\n###Get store names\r\n\r\n*Admin only*\r\n\r\nURL `/store/`\r\n\r\nMethod `GET`\r\n\r\nSuccess status `200`\r\n\r\nReturns an array of store names.\r\n\r\n### Add object to store\r\n\r\n\r\nURL `/store/[store name]/`\r\n\r\nMethod `POST`\r\n\r\nSuccess status `201`\r\n\r\n######Post Data\r\nAn object represented by the schema values set when a store is created. \r\n\r\n    {"[column name]":[value], "[another column name]":[value]}\r\n\r\nIf value doesn\'t match schema type, status will return a `400` bad request.\r\n\r\n### Get object from store\r\n\r\nURL `/store/[store name]/[object id]/`\r\n\r\nMethod `GET`\r\n\r\nSuccess status `200`\r\n\r\nReturns the requested object\r\n\r\n\r\n### Update object in store\r\n\r\nURL `/store/[store name]/[object id]/`\r\n\r\nMethod `PUT`\r\n\r\nSuccess status `200`\r\n\r\n######Post Data\r\nAn object represented by the schema values set when a store is created. \r\n\r\n    {"[column name]":[new value]}\r\n\r\nIf value doesn\'t match schema type, status will return a `400` bad request.\r\n\r\n### Query objects from store\r\n\r\nURL `/store/[store name]/`\r\n\r\nMethod `GET`\r\n\r\nSuccess status `200`\r\n\r\nReturns an array of objects based on the query qualifications\r\n\r\n######Query string\r\n\r\n    ?{"where":{"$ne":null}, "limit":1, "skip":3, "sort":{"[column name]":1},"count":false,"select":{"[column name]":1}}\r\n\r\n\r\n`where` (Optional) A query object. See [Query operators](j) for more info\r\n\r\n`limit` (Optional) Limits the amount of objects to this number\r\n\r\n`skip` (Optional) A number for how many objects to skip over\r\n\r\n`count` (Optional) A boolean. If true, return object count instead\r\n\r\n`select` (Optional) Only return objects with specfic column names denoted in this object\r\n\r\n\r\n### Delete object from store\r\n\r\nURL `/store/[store name]/[object id]/`\r\n\r\nMethod `DELETE`\r\n\r\nSuccess status `200`\r\n\r\nReturns a HTTP status of `404 Not Found` if object doesn\'t exist \r\n\r\n### Get info for store\r\n\r\n*Admin only*\r\n\r\nURL `/store/[store name]/info/`\r\n\r\nMethod `GET`\r\n\r\nSuccess status `200`\r\n\r\nReturns the `roles` and `schema` objects\r\n\r\n## Users\r\n\r\n### Login\r\n\r\nURL `/user/login/`\r\n\r\nMethod `POST`\r\n\r\nSuccess status `200`\r\n\r\nReturns an object containing the user object id and a session key, and sends a session cookie.\r\n\r\nLogging in can be accomplished in one of two ways:\r\n\r\n######Post Data\r\n\r\n    {"user":"[user or email]", "password":"[user password]"}\r\n\r\nor\r\n\r\n######Authorization Header\r\n\r\n    Authorization: Basic [base64 of user name and password]\r\n\r\n\r\n###Log out \r\n\r\nURL `/user/logout/`\r\n\r\nMethod `GET`\r\n\r\nSuccess status `200`\r\n\r\nSends an expired null session cookie. \r\n\r\n\r\n###Create new user\r\n\r\nURL `/user/`\r\n\r\nMethod `POST`\r\n\r\nSuccess status `201`\r\n\r\n######Post Data\r\n\r\n    {"username":"[user name]", "password":"[user password]", "email":"[email address]", "admin":false}\r\n\r\n`username` Sets the user name\r\n\r\n`password` Sets the password\r\n\r\n`email` Sets the email\r\n\r\n`Admin` (Optional) *Must be an admin to set this value*. Makes user an admin. \r\n\r\n###Update user\r\n\r\nURL `/user/[user id]/`\r\n\r\nMethod `PUT`\r\n\r\nSuccess status `200`\r\n\r\nUpdates user object values. Must be logged in as the requesting user, or an admin. \r\n\r\nSee [Update object in store](todo) for more info\r\n\r\n\r\n###Get user \r\n\r\nURL `/user/[user id]/`\r\n\r\nMethod `GET`\r\n\r\nSuccess status `200`\r\n\r\nReturns a store object representing user information. Must be logged in as the requesting user, or an admin. \r\n\r\n###Query users\r\n\r\n*Admin only*\r\n\r\nURL `/user/`\r\n\r\nMethod `GET`\r\n\r\nSuccess status `200`\r\n\r\nReturns an array of user objects based on the query filter. See [Query objects from store](todo) for more info\r\n\r\n\r\n### Delete user\r\n\r\nURL `/user/[user id]/`\r\n\r\nMethod `DELETE`\r\n\r\nSuccess status `200`\r\n\r\nDeletes the user. Must be logged in as the requesting user, or an admin. \r\n\r\n### Activate user\r\n\r\nURL `/user/activate`\r\n\r\nMethod `GET`\r\n\r\nSuccess status `200`\r\n\r\nActivates a user associated with a certain activation code\r\n\r\n######Query string \r\n\r\n    ?[activation code]\r\n\r\n###Forgot password\r\n\r\nURL `/user/forgotpassword/`\r\n\r\nMethod `GET`\r\n\r\nSuccess status `200`\r\n\r\nSends a temporary one-time-use password to requested email address\r\n\r\n###### Query string\r\n\r\n    ?{"email":"[user email]"}\r\n\r\n\r\n## Groups\r\n\r\nGroups are collections of users for the purpose of allowing its members to access permission-level based api calls. \r\n\r\n### Create new group\r\n\r\n*Admin only*\r\n\r\nURL `/group/`\r\n\r\nMethod `POST`\r\n\r\nSuccess status `201`\r\n\r\n######Post Data\r\n\r\n    {"users":[0,1,2], "name":"[group name]"}\r\n\r\n`users` An array of users representing the group\r\n\r\n`name` (Optional) The name of the group\r\n\r\n\r\n### Update group\r\n\r\n*Admin only*\r\n\r\nURL `/group/[group id]/`\r\n\r\nMethod `PUT`\r\n\r\nSuccess status `200`\r\n\r\nUpdates group object values. See [Update object in store](todo) for more info\r\n\r\n### Query groups\r\n\r\n*Admin only*\r\n\r\nURL `/group/`\r\n\r\nMethod `GET`\r\n\r\nSuccess status `200`\r\n\r\nReturns an array of group objects based on the query filter. See [Query objects from store](todo) for more info\r\n\r\n### Delete a group\r\n\r\n*Admin only*\r\n\r\nURL `/group/[group id]/`\r\n\r\nMethod `DELETE`\r\n\r\nSuccess status `200`\r\n\r\n## Custom routes\r\n\r\nThe previous set of methods listed above are the building blocks for building customized RESTful APIs. Custom routes can build on top of these building blocks. \r\n\r\nTo add a custom route, you\'ll use the following method in your `main.js` file. \r\n\r\n##### store.addRoute(routeObject)\r\n\r\n**`routeObject`** requires the following values to be set:\r\n\r\n  `method` The http method needed to call this route\r\n\r\n  `path` The http path to be called. See dREST\'s [route path conditions](https://github.com/jjbateman/dREST/blob/master/Documentation.md#route-path-conditions) for more info\r\n\r\n  `status` The default return http status code\r\n\r\n  `roles` Object containing the users and/or groups that can call this route\r\n\r\n  `action` \r\n\r\n\r\nThe following example uses the url path to limit how many results are returned. The returning objects are from a store called "abc", and each object only contains the "createdOn" value:\r\n\r\n```javascript \r\n     \r\n    var customRoute = store.addRoute({\r\n\t\tmethod:"get",\r\n\t\tpath:"abcCreatedOn/{number}",\r\n\t\tstatus:200,\r\n\t\troles:{user:["*"], group:[1]},\r\n\r\n\t\taction:function(handler) {\r\n\t\t\tvar howMany = parseInt(handler.path[2]);\r\n\t\t\thandler.save();  //saves the handler state\r\n\t\t\thandler.path = ["store","abc"];\r\n\t\t\thandler.queryString = JSON.stringify( {limit:howMany, select:{createdOn:1}} );\r\n\t\t\thandler.store.query(handler,function(handler, r) {\r\n\t\t\t\thandler.restore(); //restores the handler state to the previous save\r\n\t\t\t\t\r\n\t\t\t\thandler.respond(r);\r\n\t\t\t});\r\n\t\t}\r\n    });\r\n\r\n```\r\n\r\nThis example can be run by sending a `GET` request to `http://[server]/run/abcCreatedOn/[max number of results]/` \r\n\r\n\r\n\r\n## Query operators\r\n\r\n###Comparison\r\n\r\n####$all \r\n\r\nMatches arrays that contain **all** elements specified in the query.\r\n\r\nThe following example selects any object from the "abc" store where the "zyx" column array contains the elements "a", "b", and "d":\r\n\r\n`http://localhost/store/abc/?{"where":{"zyx":{"$all":["a","b","d"]}}}`\r\n\r\n####$gt\r\n\r\nMatches values that are **greater than** the value specified in the query.\r\n\r\nThe following example selects any object from the "abc" store where the "d" column contains a number greater than 7:\r\n\r\n`http://localhost/store/abc/?{"where":{"d":{"$gt":7}}}`\r\n\r\n####$lt\r\n\r\nMatches values that are **less than** the value specified in the query.\r\n\r\nThe following example selects any object from the "abc" store where the "e" column contains a number less than 100:\r\n\r\n`http://localhost/store/abc/?{"where":{"e":{"$lt":100}}}`\r\n\r\n####$lte\r\n\r\nMatches values that are **less than or equal to** the value specified in the query.\r\n\r\nThe following example selects any object from the "abc" store where the "f" column contains a number less than or equal to 50:\r\n\r\n`http://localhost/store/abc/?{"where":{"f":{"$lte":50}}}`\r\n\r\n####$ne\r\n\r\nMatches all values that are **not equal** to the value specified in the query.\r\n\r\nThe following example selects any object from the "abc" store where the "g" column contains a value that is not null:\r\n\r\n`http://localhost/store/abc/?{"where":{"g":{"$ne":null}}}`\r\n\r\n####$nin \r\n\r\nMatches values that do not exist in an array specified to the query.\r\n\r\nThe following example selects any object from the "abc" store where the "zyx" column array does not contain the elements "a", "b", and "d":\r\n\r\n`http://localhost/store/abc/?{"where":{"zyx":{"$nin":["a","b","d"]}}}`\r\n\r\n\r\n### Logical \r\n\r\n####$and\r\n\r\nJoins query clauses with a logical **AND**, returns all objects that match the conditions of both clauses.\r\n\r\nThe following example selects any object from the "abc" store where the "d" column contains a number greater than 2 **and** less than 99:\r\n\r\n`http://localhost/store/abc/?{"where":{"$and":[{"d":{"$gt":2}},{"d":{"$lt":99}}]}}`\r\n\r\n####$nor\t\r\n\r\nJoins query clauses with a logical **NOR**, returns all objects that fail to match both clauses\r\n\r\n',
+93 silly publish   readmeFilename: 'readme.md',
+93 silly publish   _id: 'baas@1.0.3',
+93 silly publish   dist: { shasum: '57da5235cd551eb02de88be0769375b20f380b4b' },
+93 silly publish   _from: '.' }
+94 verbose url raw baas
+95 verbose url resolving [ 'https://registry.npmjs.org/', './baas' ]
+96 verbose url resolved https://registry.npmjs.org/baas
+97 info trying registry request attempt 1 at 17:44:26
+98 http PUT https://registry.npmjs.org/baas
+99 http 409 https://registry.npmjs.org/baas
+100 verbose url raw baas
+101 verbose url resolving [ 'https://registry.npmjs.org/', './baas' ]
+102 verbose url resolved https://registry.npmjs.org/baas
+103 info trying registry request attempt 1 at 17:44:28
+104 http GET https://registry.npmjs.org/baas
+105 http 200 https://registry.npmjs.org/baas
+106 error publish fail Cannot publish over existing version.
+106 error publish fail Update the 'version' field in package.json and try again.
+106 error publish fail
+106 error publish fail If the previous version was published in error, see:
+106 error publish fail     npm help unpublish
+106 error publish fail
+106 error publish fail To automatically increment version numbers, see:
+106 error publish fail     npm help version
+107 error System Windows_NT 6.1.7601
+108 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "publish"
+109 error cwd C:\Users\jj.DEADWOOD\Documents\GitHub\BaaS
+110 error node -v v0.8.21
+111 error npm -v 1.2.11
+112 error code EPUBLISHCONFLICT
+113 verbose exit [ 1, true ]

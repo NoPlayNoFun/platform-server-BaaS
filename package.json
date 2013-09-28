@@ -31,6 +31,6 @@
 	"session",
 	"authentication"
   ],
-  "repository": "git://github.com/jjbateman/baas.js",
-  "main": "baas"
+  "repository": "git://github.com/jjbateman/baas",
+  "main": "baas.js"
 }
