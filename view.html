@@ -204,7 +204,7 @@
 		Baas.prototype.user = {
 			login:function(username, password, callback) {
 				var baas = this.baas;
-				this.baas.get("user/login",{user:username, password:password}, function(response){
+				this.baas.post("user/login",null,{user:username, password:password}, function(response){
 					if(response.status==200) {
 					//	localStorage._sessionuser = JSON.stringify(response.response);
 					//	baas._sessionuser = response.response;
