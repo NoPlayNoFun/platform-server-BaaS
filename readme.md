@@ -1,5 +1,5 @@
 # Node BaaS
-Store is a permissions level server-side data store with a RESTful API. 
+BaaS is a "backend-as-a-service" permissions level data store with a RESTful API for node
 
 ## Setup 
 
@@ -12,7 +12,6 @@ Store is a permissions level server-side data store with a RESTful API.
    * Create a `main.js` file. This is the file you will use to configure baas
   
 ```javascript
-
         var baas = require("baas");
         var store = baas.createStore("window",8080,"127.0.0.1");
 ```
