@@ -1,5 +1,5 @@
 # Node BaaS
-BaaS is a "backend-as-a-service" permissions level data store with a RESTful API for node
+BaaS is a "backend-as-a-service" permissions level data store with a RESTful API. 
 
 ## Setup 
 
