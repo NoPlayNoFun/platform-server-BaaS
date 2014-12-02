@@ -33,6 +33,5 @@
 	"authentication"
   ],
   "repository": "git://github.com/NoPlayNoFun/platform-server-BaaS",
-  "main": "./lib/baas.js",
-  "publishConfig":{"registry":"https://npnf0.artifactoryonline.com/npnf0/api/npm/npm-releases-local"}
+  "main": "./lib/baas.js"
 }
