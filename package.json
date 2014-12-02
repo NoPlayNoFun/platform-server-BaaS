@@ -1,7 +1,7 @@
 {
-  "name": "baas",
+  "name": "platform-server-BaaS",
   "description": "Node Back-end as a service. A permissions level server-side data store with a RESTful API.",
-  "version": "1.0.36",
+  "version": "1.1.0",
   "license": "MIT",
   "author": "JJ Bateman",
   "contributors": [
@@ -19,19 +19,20 @@
   "keywords": [
 	"backend",
 	"baas",
-    "store",
+	"store",
 	"database",
 	"data",
-    "web",
-    "rest",
-    "restful",
-    "router",
-    "api",
+	"web",
+	"rest",
+	"restful",
+	"router",
+	"api",
 	"login",
 	"permissions",
 	"session",
 	"authentication"
   ],
-  "repository": "git://github.com/jjbateman/baas",
-  "main": "./lib/baas.js"
+  "repository": "git://github.com/NoPlayNoFun/platform-server-BaaS",
+  "main": "./lib/baas.js",
+  "publishConfig":{"registry":"https://npnf0.artifactoryonline.com/npnf0/api/npm/npm-releases-local"}
 }
