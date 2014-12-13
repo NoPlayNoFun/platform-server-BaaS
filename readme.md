@@ -187,6 +187,10 @@ Method `POST`
 
 Success status `201`
 
+In this customized version of BaaS, returns the ID of the inserted object.
+
+    {'objectId':[object id]}
+
 ######Post Data
 An object represented by the schema values set when a store is created. 
 
