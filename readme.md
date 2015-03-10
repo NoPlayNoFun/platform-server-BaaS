@@ -113,6 +113,7 @@ Allows you to create custom rest calls. See [Custom routes](#custom-routes) for 
 * [Delete a group](#delete-a-group)
 
 ####[Platform routes](#platform-routes)
+* [Upsert](#upsert)
 
 ####[Custom routes](#custom-routes)
 
