@@ -1,7 +1,7 @@
 {
   "name": "platform-server-BaaS",
   "description": "Node Back-end as a service. A permissions level server-side data store with a RESTful API.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "license": "MIT",
   "author": "JJ Bateman",
   "contributors": [
