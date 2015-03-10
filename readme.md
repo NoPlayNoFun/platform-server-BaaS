@@ -460,6 +460,26 @@ Method `DELETE`
 
 Success status `200`
 
+## Platform routes
+
+### Upsert
+Description: 
+	Upsert a document in a database. If no records match, one is created, otherwise the first
+	matching record is updated.
+	Warning: The side effect of the upsert is that the objectId (that is, BaaS's object ID)
+	increments with every upsert. (The mongodb _id field is not affected.) Also the createdOn
+	date will be set. In other words, it is treated as a remove followed by an insert.
+
+URL `/run/upsert/[store name]/`
+
+Method `PUT`
+
+Success status `200`
+
+####Post Data
+{"[column name]":[new value], ...}
+
+
 ## Custom routes
 
 The previous set of methods listed above are the building blocks for building customized RESTful APIs. Custom routes can build on top of these building blocks. 
