@@ -33,5 +33,5 @@
 	"authentication"
   ],
   "repository": "git://github.com/NoPlayNoFun/platform-server-BaaS",
-  "main": "./lib/baas.js"
+  "main": "./lib/index.js"
 }
