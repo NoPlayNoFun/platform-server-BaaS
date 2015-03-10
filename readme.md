@@ -112,6 +112,8 @@ Allows you to create custom rest calls. See [Custom routes](#custom-routes) for 
 * [Query groups](#query-groups)
 * [Delete a group](#delete-a-group)
 
+####[Platform routes](#platform-routes)
+
 ####[Custom routes](#custom-routes)
 
 ####[Query operators](#query-operators)
