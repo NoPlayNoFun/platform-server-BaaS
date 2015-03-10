@@ -1,5 +1,5 @@
 {
-  "name": "platform-server-BaaS",
+  "name": "platform-server-baas",
   "description": "Node Back-end as a service. A permissions level server-side data store with a RESTful API.",
   "version": "1.2.0",
   "license": "MIT",
